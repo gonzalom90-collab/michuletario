@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard RCV — SCORE2 / SCORE2-OP / SCORE2-Diabetes + Modificadores ESC 2021/2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,30..100;1,9..144,400..700,30..100&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Calculadora RCV — Editorial clinical refinement
+   ============================================================ */
+:root{
+  /* —— Colour tokens — warm cream / petrol / aged amber —— */
+  --bg: #f4f1e8;
+  --bg-soft: #ede8d8;
+  --bg-deep: #e2dcc7;
+  --surface: #fdfbf3;
+  --surface-2: #f8f4e8;
+  --ink: #1a1714;
+  --ink-soft: #3d3631;
+  --ink-muted: #6b6358;
+  --muted: #8c8478;
+  --line: #d6cbb4;
+  --line-soft: #e6dfc9;
+  --line-deep: #b8ad94;
+  --accent: #1f4a5b;
+  --accent-2: #2d6478;
+  --accent-soft: #c4d4dc;
+  --warm: #a8773d;
+  --warm-soft: #e8d4ac;
+
+  /* —— Risk colours — sophisticated, accessible (WCAG AA) —— */
+  --bajo: #426e3d;
+  --bajo-bg: #e0e8d0;
+  --bajo-deep: #2c4f29;
+  --mod: #976a14;
+  --mod-bg: #f3e6c0;
+  --mod-deep: #6e4d0e;
+  --alto: #ad5824;
+  --alto-bg: #f0d4b8;
+  --alto-deep: #7e3f1a;
+  --muy: #8b2828;
+  --muy-bg: #ecc8c0;
+  --muy-deep: #5e1c1c;
+
+  /* —— Shadows —— */
+  --shadow-sm: 0 1px 2px rgba(26,23,20,.04), 0 0 0 1px rgba(26,23,20,.02);
+  --shadow-md: 0 2px 4px rgba(26,23,20,.06), 0 1px 2px rgba(26,23,20,.04);
+  --shadow-lg: 0 8px 16px -4px rgba(26,23,20,.08), 0 4px 8px -2px rgba(26,23,20,.04);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-feature-settings:"kern" on,"liga" on,"calt" on;-webkit-text-size-adjust:100%}
+body{
+  background: var(--bg);
+  background-image:
+    radial-gradient(1200px 600px at 0% 0%, rgba(168,119,61,.05), transparent 60%),
+    radial-gradient(1000px 600px at 100% 100%, rgba(31,74,91,.04), transparent 60%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+::selection{background:var(--warm-soft);color:var(--ink)}
+
+.wrap{max-width:1480px;margin:0 auto;padding:36px 32px 48px}
+
+/* ============ HEADER ============ */
+header{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:32px;
+  align-items:end;
+  border-bottom:1.5px solid var(--ink);
+  padding-bottom:24px;
+  margin-bottom:32px;
+}
+.brand{display:flex;align-items:center;gap:18px}
+.brand-mark{flex-shrink:0;color:var(--accent)}
+.title-block h1{
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight:700;
+  font-size:30px;
+  letter-spacing:-0.02em;
+  line-height:1.05;
+  color: var(--ink);
+  font-variation-settings:"opsz" 144,"SOFT" 50;
+  font-feature-settings:"ss01";
+}
+.title-block .subtitle{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:15px;
+  color:var(--ink-soft);
+  margin-top:6px;
+  font-variation-settings:"opsz" 14,"SOFT" 100;
+  letter-spacing:-0.005em;
+}
+.meta-block{
+  text-align:right;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  color:var(--ink-muted);
+  letter-spacing:0.02em;
+  border-left:1px solid var(--line);
+  padding-left:20px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  line-height:1.55;
+}
+.meta-block strong{
+  display:block;
+  color:var(--ink);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  font-size:10px;
+  margin-bottom:4px;
+}
+
+/* ============ GRID ============ */
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 480px;
+  gap:24px;
+  align-items:start;
+}
+@media (max-width:1100px){.grid{grid-template-columns:1fr}}
+
+/* ============ CARDS ============ */
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:24px 26px;
+  position:relative;
+  transition:border-color .2s ease, box-shadow .2s ease;
+  box-shadow:var(--shadow-sm);
+}
+.card:hover{border-color:var(--line-deep);box-shadow:var(--shadow-md)}
+.card+.card{margin-top:18px}
+
+.card h2{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:19px;
+  font-weight:700;
+  font-variation-settings:"opsz" 24,"SOFT" 50;
+  letter-spacing:-0.012em;
+  line-height:1.2;
+  color:var(--ink);
+  margin-bottom:18px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line-soft);
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.card h2 .num{
+  flex-shrink:0;
+  width:30px;
+  height:30px;
+  border:1.5px solid var(--ink);
+  border-radius:50%;
+  background:var(--surface);
+  color:var(--ink);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Fraunces',serif;
+  font-size:14px;
+  font-weight:700;
+  font-style:italic;
+  font-variation-settings:"opsz" 14,"SOFT" 100;
+  line-height:1;
+}
+.card h3{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:11px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-muted);
+  margin:18px 0 10px;
+}
+.card h3:first-child{margin-top:0}
+
+/* ============ FORM ============ */
+.row,.row-3{display:grid;gap:14px;margin-bottom:14px}
+.row{grid-template-columns:1fr 1fr}
+.row-3{grid-template-columns:repeat(3,1fr)}
+.row-1{margin-bottom:14px}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:500;
+  color:var(--ink-soft);
+  margin-bottom:5px;
+  letter-spacing:0.005em;
+}
+label .unit{
+  color:var(--muted);
+  font-weight:400;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0;
+}
+
+input[type=number],input[type=text],select{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  background:var(--surface);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13.5px;
+  font-weight:500;
+  color:var(--ink);
+  border-radius:3px;
+  transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:textfield;
+}
+select{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-weight:500;
+  cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%231a1714' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  padding-right:32px;
+}
+input::placeholder{color:var(--muted);opacity:0.65}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input:focus,select:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(31,74,91,.15);
+  background:var(--surface);
+}
+input[readonly]{
+  background:var(--surface-2);
+  cursor:default;
+  font-weight:600;
+  color:var(--ink);
+}
+
+/* ============ SEGMENTED CONTROL ============ */
+.seg{
+  display:inline-flex;
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:3px;
+  background:var(--bg-soft);
+  padding:3px;
+  position:relative;
+}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{
+  flex:1;
+  text-align:center;
+  padding:8px 12px;
+  font-size:12.5px;
+  font-weight:500;
+  cursor:pointer;
+  margin:0;
+  color:var(--ink-soft);
+  border-radius:2px;
+  transition:all .18s ease;
+  user-select:none;
+  position:relative;
+}
+.seg label:hover{color:var(--ink)}
+.seg input:checked+label{
+  background:var(--surface);
+  color:var(--ink);
+  font-weight:600;
+  box-shadow:0 1px 2px rgba(26,23,20,.08), 0 0 0 0.5px rgba(26,23,20,.06);
+}
+.seg input:focus-visible+label{outline:2px solid var(--accent);outline-offset:1px}
+
+/* ============ CHECKBOXES ============ */
+.chk{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:12px 14px;
+  border:1px solid var(--line-soft);
+  background:var(--surface);
+  cursor:pointer;
+  font-size:13px;
+  line-height:1.5;
+  border-radius:3px;
+  transition:all .15s ease;
+  margin-bottom:6px;
+  position:relative;
+}
+.chk:hover{border-color:var(--line-deep);background:var(--surface-2)}
+.chk input[type=checkbox]{
+  appearance:none;
+  -webkit-appearance:none;
+  width:16px;
+  height:16px;
+  border:1.5px solid var(--line-deep);
+  border-radius:3px;
+  background:var(--surface);
+  margin-top:2px;
+  flex-shrink:0;
+  cursor:pointer;
+  transition:all .15s ease;
+  position:relative;
+}
+.chk input[type=checkbox]:hover{border-color:var(--accent)}
+.chk input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
+.chk input[type=checkbox]:checked::after{
+  content:'';
+  position:absolute;
+  left:4px;
+  top:1px;
+  width:5px;
+  height:9px;
+  border:solid white;
+  border-width:0 1.6px 1.6px 0;
+  transform:rotate(45deg);
+}
+.chk input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chk.checked{
+  background:var(--surface-2);
+  border-color:var(--accent);
+  box-shadow:inset 3px 0 0 var(--accent);
+}
+.chk small{display:block;color:var(--muted);font-size:11.5px;margin-top:3px;line-height:1.45}
+.chk strong{font-weight:600;color:var(--ink)}
+
+/* ============ MODIFIER GROUPS ============ */
+.mod-group{
+  padding:14px 16px;
+  border:1px dashed var(--line);
+  background:var(--bg-soft);
+  margin-bottom:12px;
+  border-radius:3px;
+}
+.mod-group:last-child{margin-bottom:0}
+.mod-group h4{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:11px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--accent);
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+.mod-group h4 .badge{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  padding:2px 7px;
+  background:var(--ink);
+  color:var(--surface);
+  letter-spacing:0.04em;
+  font-weight:500;
+  border-radius:2px;
+  text-transform:none;
+}
+.mod-group h4 .badge.muy{background:var(--muy)}
+.mod-group h4 .badge.alto{background:var(--alto)}
+.mod-group h4 .badge.mod{background:var(--mod)}
+
+/* ============ DM/SCORE2 BLOCKS ============ */
+.dm-block,.score2-warn{display:none}
+.dm-block.show,.score2-warn.show{display:block}
+
+/* ============ BUTTON RESET ============ */
+.btn-reset{
+  background:transparent;
+  border:1px solid var(--line);
+  padding:7px 14px;
+  font-size:11px;
+  font-family:'IBM Plex Sans',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  font-weight:600;
+  cursor:pointer;
+  color:var(--ink-soft);
+  border-radius:3px;
+  transition:all .15s ease;
+  margin-left:auto;
+}
+.btn-reset:hover{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.btn-reset:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ============ RESULT PANEL ============ */
+.result{
+  position:sticky;
+  top:32px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:4px;
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+@media (max-width:1100px){.result{position:static}}
+
+.result-header{
+  padding:18px 24px;
+  background:var(--ink);
+  color:var(--surface);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.result-header h2{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:19px;
+  font-weight:700;
+  font-variation-settings:"opsz" 24,"SOFT" 50;
+  margin:0;
+  border:none;
+  padding:0;
+  color:inherit;
+}
+.result-header h2 .num{
+  background:var(--surface);
+  color:var(--ink);
+  border-color:var(--surface);
+}
+
+.result-body{padding:22px 24px}
+
+/* ============ SCORE DISPLAY ============ */
+.score-display{
+  text-align:center;
+  padding:30px 18px 24px;
+  background:linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%);
+  border:1px solid var(--line-soft);
+  border-radius:3px;
+  margin-bottom:16px;
+  position:relative;
+  overflow:hidden;
+}
+.score-display::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(168,119,61,.10), transparent 70%);
+  pointer-events:none;
+}
+.score-display .label{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:10.5px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.14em;
+  color:var(--ink-muted);
+  margin-bottom:8px;
+  position:relative;
+}
+.score-display .value{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:78px;
+  font-weight:700;
+  font-variation-settings:"opsz" 144,"SOFT" 50;
+  font-feature-settings:"ss01";
+  letter-spacing:-0.045em;
+  line-height:0.9;
+  color:var(--ink);
+  position:relative;
+}
+.score-display .value .pct{
+  font-family:'Fraunces',serif;
+  font-size:36px;
+  font-weight:400;
+  font-style:italic;
+  color:var(--ink-muted);
+  margin-left:4px;
+  vertical-align:top;
+  font-variation-settings:"opsz" 36,"SOFT" 100;
+}
+.score-display .algo{
+  margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  color:var(--muted);
+  letter-spacing:0.02em;
+  position:relative;
+}
+
+/* ============ CATEGORY CARD ============ */
+.cat-card{
+  padding:18px 22px;
+  border-radius:3px;
+  margin-bottom:16px;
+  position:relative;
+  border:1px solid;
+  border-left-width:4px;
+}
+.cat-card.bajo{background:var(--bajo-bg);border-color:var(--bajo);color:var(--bajo-deep)}
+.cat-card.mod {background:var(--mod-bg); border-color:var(--mod); color:var(--mod-deep)}
+.cat-card.alto{background:var(--alto-bg);border-color:var(--alto);color:var(--alto-deep)}
+.cat-card.muy {background:var(--muy-bg); border-color:var(--muy); color:var(--muy-deep)}
+.cat-card .lab{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  font-weight:600;
+  opacity:0.8;
+  margin-bottom:4px;
+}
+.cat-card .cat{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:26px;
+  font-weight:700;
+  font-variation-settings:"opsz" 28,"SOFT" 50;
+  letter-spacing:-0.015em;
+  line-height:1.05;
+}
+.cat-card.bajo .cat{color:var(--bajo)}
+.cat-card.mod  .cat{color:var(--mod)}
+.cat-card.alto .cat{color:var(--alto)}
+.cat-card.muy  .cat{color:var(--muy)}
+.cat-card .reason{
+  font-size:12.5px;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px dashed currentColor;
+  opacity:0.85;
+  line-height:1.5;
+  font-weight:500;
+}
+
+/* ============ TARGET GRID ============ */
+.target-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.target{
+  background:var(--surface-2);
+  border:1px solid var(--line-soft);
+  padding:11px 13px;
+  border-radius:3px;
+}
+.target .lab{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--ink-muted);
+  font-weight:600;
+}
+.target .v{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14.5px;
+  font-weight:600;
+  color:var(--ink);
+  margin-top:3px;
+  letter-spacing:-0.01em;
+}
+
+/* ============ ALERTS ============ */
+.alert{
+  padding:11px 14px;
+  border-left:3px solid;
+  font-size:12.5px;
+  line-height:1.5;
+  margin-bottom:12px;
+  border-radius:3px;
+}
+.alert.warn  {background:#fdf6e3;border-color:#97770f;color:#5a430a}
+.alert.info  {background:#e8eef2;border-color:var(--accent);color:#1a3845}
+.alert.danger{background:var(--muy-bg);border-color:var(--muy);color:var(--muy-deep)}
+.alert strong{font-weight:600}
+
+/* ============ EMPTY STATE ============ */
+.empty{
+  text-align:center;
+  padding:48px 22px;
+  color:var(--muted);
+  font-size:13.5px;
+  line-height:1.55;
+}
+.empty .ico-svg{
+  display:block;
+  margin:0 auto 14px;
+  color:var(--accent);
+  opacity:0.4;
+}
+.empty .ecg-line{
+  stroke-dasharray:200;
+  stroke-dashoffset:200;
+  animation:ecgDraw 1.6s ease-out forwards;
+}
+.empty .empty-text{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-size:14.5px;
+  color:var(--ink-muted);
+  font-variation-settings:"opsz" 14,"SOFT" 100;
+  line-height:1.5;
+}
+
+@keyframes ecgDraw{
+  to{stroke-dashoffset:0}
+}
+
+/* ============ REFS / FOOTER ============ */
+.refs{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid var(--line-soft);
+  font-size:10.5px;
+  color:var(--muted);
+  line-height:1.6;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.refs strong{color:var(--ink-soft);font-weight:600}
+
+footer{
+  margin-top:36px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  font-size:11px;
+  color:var(--muted);
+  font-family:'IBM Plex Sans',sans-serif;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:14px;
+  line-height:1.55;
+}
+footer strong{color:var(--ink-soft);font-weight:600}
+
+.calc-info{
+  font-size:11.5px;
+  color:var(--muted);
+  margin-top:6px;
+  line-height:1.5;
+}
+
+/* ============ ACCESSIBILITY ============ */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
+  .empty .ecg-line{stroke-dashoffset:0;animation:none}
+}
+
+/* ============ ENTRANCE ANIMATIONS ============ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(6px)}
+  to  {opacity:1;transform:none}
+}
+.score-display,.cat-card,.alert{animation:fadeUp .3s ease-out}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:700px){
+  .wrap{padding:20px 16px 32px}
+  header{grid-template-columns:1fr;gap:16px;align-items:start}
+  .meta-block{
+    text-align:left;
+    border-left:none;
+    padding-left:0;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+  }
+  .title-block h1{font-size:24px}
+  .row,.row-3{grid-template-columns:1fr}
+  .score-display .value{font-size:60px}
+  .score-display .value .pct{font-size:28px}
+  .target-grid{grid-template-columns:1fr}
+  .card{padding:18px 18px}
+}
+
+/* ============ PRINT ============ */
+@media print{
+  body{
+    background:white;
+    background-image:none;
+    color:black;
+    font-size:11pt;
+  }
+  .wrap{padding:0;max-width:100%}
+  header{border-bottom:2px solid black;padding-bottom:12px;margin-bottom:14px}
+  .meta-block{display:none}
+  .grid{grid-template-columns:1fr;gap:14px}
+  .card,.result{border:1px solid #999;box-shadow:none;page-break-inside:avoid}
+  .btn-reset{display:none}
+  .result{position:static}
+  .result-header,.score-display,.cat-card,.target,.alert{
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <svg class="brand-mark" width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+      <circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M 8 26 L 17 26 L 19.5 16 L 23 36 L 27 19 L 30.5 30 L 33.5 26 L 44 26"
+            fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="title-block">
+      <h1>Calculadora de Riesgo Cardiovascular Integrado</h1>
+      <p class="subtitle">SCORE2 · SCORE2-OP · SCORE2-Diabetes — guías ESC 2021/2025 con modificadores clínicos</p>
+    </div>
+  </div>
+  <div class="meta-block">
+    <strong>Apoyo a decisión clínica</strong>
+    <span>No sustituye al juicio del profesional</span>
+    <span>Algoritmo verificado contra ESC oficial</span>
+  </div>
+</header>
+
+<div class="grid">
+
+  <!-- ====== INPUTS ====== -->
+  <div>
+    <!-- Region + reset -->
+    <div class="card">
+      <h2><span class="num">1</span>Región de riesgo cardiovascular
+        <button class="btn-reset" id="btnReset" style="margin-left:auto">Nueva consulta</button>
+      </h2>
+      <div class="row">
+        <div>
+          <label>País (determina la región)</label>
+          <select id="country"></select>
+          <div class="calc-info">Clasificación OMS (mortalidad CV estandarizada por edad)</div>
+        </div>
+        <div>
+          <label>Región resultante</label>
+          <input type="text" id="region" readonly style="background:#f0eee7;font-weight:600">
+        </div>
+      </div>
+    </div>
+
+    <!-- Antecedentes personales (override clínico) -->
+    <div class="card" style="margin-top:16px;border-left:4px solid var(--muy)">
+      <h2><span class="num" style="background:var(--muy)">2</span>Antecedentes personales</h2>
+      <label class="chk" style="background:#fff5f5;border-color:#f5b5b5"><input type="checkbox" data-mod="ecva-clin"><span><strong>ECVA clínica documentada:</strong> SCA previo / IAM / ictus isquémico / AIT / arteriopatía periférica<br><small style="color:var(--muy)">Si está marcado: paciente clasificado directamente como <strong>Muy Alto Riesgo</strong> (ESC 2021). SCORE2 no aplica clínicamente.</small></span></label>
+    </div>
+
+    <!-- Patient demographics -->
+    <div class="card" style="margin-top:16px">
+      <h2><span class="num">3</span>Datos demográficos</h2>
+      <div class="row-3">
+        <div>
+          <label>Edad <span class="unit">años</span></label>
+          <input type="number" id="age" min="18" max="100" step="1" placeholder="40-89">
+        </div>
+        <div>
+          <label>Sexo biológico</label>
+          <div class="seg">
+            <input type="radio" name="sex" id="sexM" value="male"><label for="sexM">Hombre</label>
+            <input type="radio" name="sex" id="sexF" value="female"><label for="sexF">Mujer</label>
+          </div>
+        </div>
+        <div>
+          <label>Tabaquismo actual</label>
+          <div class="seg">
+            <input type="radio" name="smk" id="smkN" value="0"><label for="smkN">No</label>
+            <input type="radio" name="smk" id="smkY" value="1"><label for="smkY">Sí</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vitals + lipids (extended) -->
+    <div class="card" style="margin-top:16px">
+      <h2><span class="num">4</span>Constantes y analítica</h2>
+      <h3>Presión arterial</h3>
+      <div class="row">
+        <div>
+          <label>PAS <span class="unit">mmHg</span></label>
+          <input type="number" id="sbp" min="80" max="250" step="1" placeholder="120">
+        </div>
+        <div>
+          <label>PAD <span class="unit">mmHg</span></label>
+          <input type="number" id="pad" min="40" max="150" step="1" placeholder="80">
+        </div>
+      </div>
+      <h3>Perfil lipídico</h3>
+      <div class="row-3">
+        <div>
+          <label>Colesterol total <span class="unit">mg/dL</span></label>
+          <input type="number" id="tc" min="50" max="600" step="1" placeholder="200">
+        </div>
+        <div>
+          <label>HDL <span class="unit">mg/dL</span></label>
+          <input type="number" id="hdl" min="10" max="200" step="1" placeholder="50">
+        </div>
+        <div>
+          <label>c-LDL <span class="unit">mg/dL · opcional</span></label>
+          <input type="number" id="ldl" min="10" max="500" step="1" placeholder="130">
+        </div>
+      </div>
+      <h3>Otros</h3>
+      <div class="row">
+        <div>
+          <label>Lipoproteína (a) <span class="unit">mg/dL · opcional</span></label>
+          <input type="number" id="lpa" min="0" max="500" step="1" placeholder="20">
+        </div>
+        <div></div>
+      </div>
+      <h3>Función renal</h3>
+      <div class="row">
+        <div>
+          <label>eGFR <span class="unit">mL/min/1.73m² · CKD-EPI</span></label>
+          <input type="number" id="egfr" min="5" max="200" step="1" placeholder="90">
+        </div>
+        <div>
+          <label>ACR <span class="unit">mg/g · albúmina/creatinina</span></label>
+          <input type="number" id="acr" min="0" max="3000" step="1" placeholder="15">
+        </div>
+      </div>
+      <div class="calc-info">Conversiones automáticas: CT/HDL mg/dL → mmol/L (÷38.67). Auto-detección de modificadores: CT&gt;310, LDL&gt;190, PA≥180/110, Lp(a)&gt;50/180, ERC moderada/grave (desde FG+ACR).</div>
+    </div>
+
+    <!-- Diabetes mellitus UNIFICADA -->
+    <div class="card" style="margin-top:16px">
+      <h2><span class="num">5</span>Diabetes mellitus tipo 2</h2>
+      <div class="row-1">
+        <label>¿El paciente tiene DM2?</label>
+        <div class="seg" style="max-width:240px">
+          <input type="radio" name="dm" id="dmN" value="0" checked><label for="dmN">No</label>
+          <input type="radio" name="dm" id="dmY" value="1"><label for="dmY">Sí</label>
+        </div>
+      </div>
+      <div id="dmBlock" class="dm-block">
+        <h3>Parámetros para SCORE2-Diabetes</h3>
+        <div class="row">
+          <div>
+            <label>HbA1c <span class="unit">% (NGSP)</span></label>
+            <input type="number" id="hba1c" min="4" max="18" step="0.1" placeholder="7.0">
+          </div>
+          <div>
+            <label>Edad al diagnóstico DM</label>
+            <div class="seg" style="margin-bottom:4px">
+              <input type="radio" name="dmAgeMode" id="dmAgeDirect" value="direct" checked><label for="dmAgeDirect">Directa</label>
+              <input type="radio" name="dmAgeMode" id="dmAgeCalc" value="calc"><label for="dmAgeCalc">Calcular desde año</label>
+            </div>
+            <input type="number" id="dmAge" min="0" max="100" step="1" placeholder="50 años">
+            <input type="number" id="dmYear" min="1950" max="2100" step="1" placeholder="ej. 2018" style="display:none">
+            <div class="calc-info" id="dmAgeCalcInfo" style="display:none">Edad al dx: <strong id="dmAgeCalcOut">—</strong> años (edad actual − años desde dx)</div>
+          </div>
+        </div>
+        <div class="calc-info" style="margin-top:6px">eGFR se toma de la sección 4 (Función renal). SCORE2-Diabetes solo válido 40-69a. ≥70a → SCORE2-OP con DM como predictor.</div>
+
+        <h3>Estratificación clínica de DM <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--info);color:#fff;padding:1px 5px;letter-spacing:0;font-weight:500;text-transform:none;margin-left:6px">AUTO sección 4</span></h3>
+        <div id="dmAutoPanel" style="padding:10px 12px;border:1px solid var(--line);background:#fafaf5;border-radius:1px;font-size:12.5px;line-height:1.45;margin-bottom:8px">
+          <em style="color:var(--muted)">Introduce eGFR/ACR (sección 4) y edad al dx para clasificación automática.</em>
+        </div>
+        <p class="calc-info" style="margin-bottom:6px">Si la analítica no es suficiente, marca manualmente los criterios <strong>no derivables</strong> (otros FRCV, enfermedad polimicrovascular, DM1 larga duración):</p>
+        <label class="chk"><input type="checkbox" data-mod="dm-young"><span><strong>DM joven sin factores</strong> <small>→ Moderado</small><br><small>DM1 &lt;35a o DM2 &lt;50a, &lt;10a de duración, sin otros FRCV</small></span></label>
+        <label class="chk"><input type="checkbox" data-mod="dm-nolod"><span><strong>DM sin LOD por factor adicional</strong> <small>→ Alto</small><br><small>Presencia de otro FRCV (la duración ≥10a se detecta automáticamente)</small></span></label>
+        <label class="chk"><input type="checkbox" data-mod="dm-lod"><span><strong>DM con LOD por criterio no analítico</strong> <small>→ Muy Alto</small><br><small>Enf. polimicrovascular &gt;3 localizaciones · ≥3 FRCV importantes · DM1 larga duración &gt;20a</small></span></label>
+      </div>
+    </div>
+
+    <!-- ERC auto-derived -->
+    <div class="card" style="margin-top:16px">
+      <h2><span class="num">6</span>Enfermedad renal crónica <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--info);color:#fff;padding:2px 7px;letter-spacing:0;font-weight:500;margin-left:auto">AUTO</span></h2>
+      <p class="calc-info" style="margin-bottom:8px">Clasificación automática a partir de FG y ACR (sección 4). Sin intervención manual.</p>
+      <div id="ercPanel" style="padding:11px 13px;border:1px solid var(--line);background:#fafaf5;border-radius:1px;font-size:12.5px;line-height:1.45">
+        <em style="color:var(--muted)">Introduce eGFR y ACR en la sección 4 para clasificar.</em>
+      </div>
+      <div class="calc-info" style="margin-top:6px">
+        <strong>Reglas (Excel local):</strong>
+        ERC moderada → Alto: FG 30-44 + ACR&lt;30 · FG 45-59 + ACR 30-300 · FG≥60 + ACR&gt;300.
+        ERC muy grave → Muy Alto: FG&lt;30 · FG 30-44 + ACR&gt;30.
+      </div>
+    </div>
+
+    <!-- Otros modificadores -->
+    <div class="card" style="margin-top:16px">
+      <h2><span class="num">7</span>Otros modificadores</h2>
+
+      <div class="mod-group">
+        <h4>Hipercolesterolemia familiar</h4>
+        <label class="chk"><input type="checkbox" data-mod="hf-iso"><span><strong>HF aislada</strong> <small>→ Alto</small> — sin otros factores ni ECVA</span></label>
+        <label class="chk"><input type="checkbox" data-mod="hf-comp"><span><strong>HF complicada</strong> <small>→ Muy Alto</small> — con ECVA documentada o factor de riesgo importante</span></label>
+      </div>
+
+      <div class="mod-group">
+        <h4>ECVA subclínica (hallazgo de imagen) <span class="badge muy">→ Muy Alto</span></h4>
+        <label class="chk"><input type="checkbox" data-mod="ecva-img"><span><strong>ECVA por imagen:</strong> placa aterosclerótica &gt;50% en carótidas, femorales o coronarias</span></label>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====== RESULT PANEL ====== -->
+  <div>
+    <div class="result">
+      <div class="result-header">
+        <h2><span class="num">R</span>Resultado</h2>
+      </div>
+      <div class="result-body" id="resultBody">
+        <div class="empty">
+          <svg class="ico-svg" width="100" height="56" viewBox="0 0 100 56" aria-hidden="true">
+            <path d="M 4 28 L 22 28 L 26 12 L 33 44 L 40 16 L 47 36 L 53 28 L 96 28"
+                  fill="none" stroke="currentColor" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round" class="ecg-line"/>
+          </svg>
+          <p class="empty-text">Complete los datos del paciente<br>para calcular el riesgo cardiovascular</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div>
+    <strong>Referencias:</strong> ESC 2021 CVD Prevention · SCORE2/OP (EHJ 2021;42:2439,2455) · SCORE2-Diabetes (EHJ 2023;44:2544) · ESC/EAS 2025 Dyslipidemia Update · Excel local de estratificación RCV
+  </div>
+  <div>
+    Algoritmo verificado contra implementación R oficial (RiskScorescvd, CRAN 2024)
+  </div>
+</footer>
+
+</div>
+
+<script>
+'use strict';
+
+// =============================================================
+// COUNTRY → REGION (ESC 2021, OMS CV mortality bands)
+// =============================================================
+const COUNTRIES = [
+  // Bajo (<100/100k)
+  ['ES','España','Low'],['FR','Francia','Low'],['BE','Bélgica','Low'],['NL','Países Bajos','Low'],
+  ['GB','Reino Unido','Low'],['CH','Suiza','Low'],['NO','Noruega','Low'],['IL','Israel','Low'],
+  ['DK','Dinamarca','Low'],['LU','Luxemburgo','Low'],
+  // Moderado (100-149)
+  ['DE','Alemania','Moderate'],['AT','Austria','Moderate'],['PT','Portugal','Moderate'],
+  ['IT','Italia','Moderate'],['GR','Grecia','Moderate'],['FI','Finlandia','Moderate'],
+  ['SE','Suecia','Moderate'],['IE','Irlanda','Moderate'],['CY','Chipre','Moderate'],
+  ['MT','Malta','Moderate'],['IS','Islandia','Moderate'],['SI','Eslovenia','Moderate'],
+  // Alto (150-299)
+  ['PL','Polonia','High'],['CZ','República Checa','High'],['HR','Croacia','High'],
+  ['EE','Estonia','High'],['HU','Hungría','High'],['TR','Turquía','High'],
+  ['SK','Eslovaquia','High'],['AL','Albania','High'],['BA','Bosnia-Herzegovina','High'],
+  ['KZ','Kazajistán','High'],
+  // Muy alto (≥300)
+  ['RU','Rusia','Very high'],['UA','Ucrania','Very high'],['BY','Bielorrusia','Very high'],
+  ['LT','Lituania','Very high'],['LV','Letonia','Very high'],['BG','Bulgaria','Very high'],
+  ['RO','Rumanía','Very high'],['RS','Serbia','Very high'],['ME','Montenegro','Very high'],
+  ['GE','Georgia','Very high'],['AM','Armenia','Very high'],['MD','Moldavia','Very high'],
+  ['MK','Macedonia del Norte','Very high']
+];
+
+const REGION_LABELS = {
+  'Low':'Bajo riesgo','Moderate':'Riesgo moderado','High':'Alto riesgo','Very high':'Muy alto riesgo'
+};
+
+// Populate country select
+const countrySel = document.getElementById('country');
+COUNTRIES.sort((a,b)=>a[1].localeCompare(b[1],'es'));
+COUNTRIES.forEach(([code,name,region])=>{
+  const o = document.createElement('option');
+  o.value = region; o.textContent = `${name} — ${REGION_LABELS[region]}`;
+  o.dataset.code = code;
+  if(code==='ES') o.selected = true;
+  countrySel.appendChild(o);
+});
+const regionInput = document.getElementById('region');
+function syncRegion(){ regionInput.value = REGION_LABELS[countrySel.value]; }
+countrySel.addEventListener('change', ()=>{syncRegion(); recalc();});
+syncRegion();
+
+// =============================================================
+// SCORE2 / SCORE2-OP / SCORE2-Diabetes (verified vs official R)
+// =============================================================
+function scaleParams(region, age, gender){
+  // <70 years
+  const young = {
+    'Low':    {male:[-0.5699,0.7476], female:[-0.7380,0.7019]},
+    'Moderate':{male:[-0.1565,0.8009], female:[-0.3143,0.7701]},
+    'High':   {male:[ 0.3207,0.9360], female:[ 0.5710,0.9369]},
+    'Very high':{male:[0.5836,0.8294], female:[0.9412,0.8329]}
+  };
+  // ≥70 years
+  const old = {
+    'Low':    {male:[-0.34,1.19], female:[-0.52,1.01]},
+    'Moderate':{male:[ 0.01,1.25], female:[-0.10,1.10]},
+    'High':   {male:[ 0.08,1.15], female:[ 0.38,1.09]},
+    'Very high':{male:[0.05,0.70], female:[0.38,0.69]}
+  };
+  return (age < 70 ? young : old)[region][gender];
+}
+
+function score2(region, age, gender, smoker, sbp, tc, hdl, dm){
+  // age 40-69, no DM (or DM as covariate but not validated; use SCORE2-Diabetes for DM)
+  const [s1,s2] = scaleParams(region, age, gender);
+  const A=(age-60)/5, S=(sbp-120)/20, C=(tc-6)/1, H=(hdl-1.3)/0.5;
+  let lp;
+  if(gender==='male'){
+    lp = 0.3742*A + 0.6012*smoker + 0.2777*S + 0.6457*dm + 0.1458*C + (-0.2698)*H +
+         (-0.0755)*A*smoker + (-0.0255)*A*S + (-0.0281)*A*C + 0.0426*A*H + (-0.0983)*A*dm;
+  } else {
+    lp = 0.4648*A + 0.7744*smoker + 0.3131*S + 0.8096*dm + 0.1002*C + (-0.2606)*H +
+         (-0.1088)*A*smoker + (-0.0277)*A*S + (-0.0226)*A*C + 0.0613*A*H + (-0.1272)*A*dm;
+  }
+  const baseSurv = (gender==='male') ? 0.9605 : 0.9776;
+  const unc = 1 - Math.pow(baseSurv, Math.exp(lp));
+  const cal = 1 - Math.exp(-Math.exp(s1 + s2*Math.log(-Math.log(1-unc))));
+  return Math.round(cal*1000)/10;
+}
+
+function score2OP(region, age, gender, smoker, sbp, tc, hdl, dm){
+  const [s1,s2] = scaleParams(region, age, gender);
+  const A=age-73, S=sbp-150, C=tc-6, H=hdl-1.4;
+  let lp, off;
+  if(gender==='male'){
+    lp = 0.0634*A + 0.4245*dm + 0.3524*smoker + 0.0094*S + 0.0850*C + (-0.3564)*H +
+         (-0.0174)*A*dm + (-0.0247)*A*smoker + (-0.0005)*A*S + 0.0073*A*C + 0.0091*A*H;
+    const unc = 1 - Math.pow(0.7576, Math.exp(lp - 0.0929));
+    const cal = 1 - Math.exp(-Math.exp(s1 + s2*Math.log(-Math.log(1-unc))));
+    return Math.round(cal*1000)/10;
+  } else {
+    lp = 0.0789*A + 0.6010*dm + 0.4921*smoker + 0.0102*S + 0.0605*C + (-0.3040)*H +
+         (-0.0107)*A*dm + (-0.0255)*A*smoker + (-0.0004)*A*S + (-0.0009)*A*C + 0.0154*A*H;
+    const unc = 1 - Math.pow(0.8082, Math.exp(lp - 0.229));
+    const cal = 1 - Math.exp(-Math.exp(s1 + s2*Math.log(-Math.log(1-unc))));
+    return Math.round(cal*1000)/10;
+  }
+}
+
+function score2Diabetes(region, age, gender, smoker, sbp, tc, hdl, dmAge, hba1c, egfr){
+  // age 40-69, DM2 confirmed. hba1c in mmol/mol, egfr in ml/min/1.73m2
+  const [s1,s2] = scaleParams(region, age, gender);
+  const A=(age-60)/5, S=(sbp-120)/20, C=(tc-6)/1, H=(hdl-1.3)/0.5;
+  const DA=(dmAge-50)/5, HB=(hba1c-31)/9.34, EG=(Math.log(egfr)-4.5)/0.15;
+  let lp;
+  if(gender==='male'){
+    lp = 0.5368*A + 0.4774*smoker + 0.1322*S + 0.6457*1 + 0.1102*C + (-0.1087)*H +
+         (-0.0672)*A*smoker + (-0.0268)*A*S + (-0.0983)*A*1 + (-0.0181)*A*C + 0.0095*A*H +
+         (-0.0998)*1*DA + 0.0955*HB + (-0.0591)*EG + 0.0058*EG*EG +
+         (-0.0134)*HB*A + 0.0115*EG*A;
+  } else {
+    lp = 0.6624*A + 0.6139*smoker + 0.1421*S + 0.8096*1 + 0.1127*C + (-0.1568)*H +
+         (-0.1122)*A*smoker + (-0.0167)*A*S + (-0.1272)*A*1 + (-0.0200)*A*C + 0.0186*A*H +
+         (-0.118)*1*DA + 0.1173*HB + (-0.0640)*EG + 0.0062*EG*EG +
+         (-0.0196)*HB*A + 0.0169*EG*A;
+  }
+  const baseSurv = (gender==='male') ? 0.9605 : 0.9776;
+  const unc = 1 - Math.pow(baseSurv, Math.exp(lp));
+  const cal = 1 - Math.exp(-Math.exp(s1 + s2*Math.log(-Math.log(1-unc))));
+  return Math.round(cal*1000)/10;
+}
+
+// SCORE2 thresholds by age (ESC 2021)
+function score2Category(pct, age){
+  if(age < 50){
+    if(pct < 2.5) return 'bajo';
+    if(pct < 7.5) return 'moderado';
+    if(pct < 15)  return 'alto';
+    return 'muyalto';
+  } else if(age <= 69){
+    if(pct < 5)  return 'bajo';
+    if(pct < 10) return 'moderado';
+    if(pct < 20) return 'alto';
+    return 'muyalto';
+  } else {
+    if(pct < 7.5) return 'bajo';
+    if(pct < 15)  return 'moderado';
+    if(pct < 30)  return 'alto';
+    return 'muyalto';
+  }
+}
+
+// =============================================================
+// MODIFIERS LOGIC (from user's Excel)
+// =============================================================
+const MODIFIERS = {
+  'ecva-clin': {cat:'muyalto', label:'ECVA clínica documentada'},
+  'ecva-img':  {cat:'muyalto', label:'ECVA por imagen (placa >50%)'},
+  'dm-young':  {cat:'moderado',label:'DM joven sin factores'},
+  'dm-nolod':  {cat:'alto',    label:'DM sin LOD (≥10a o factor adicional)'},
+  'dm-lod':    {cat:'muyalto', label:'DM con LOD'},
+  'hf-iso':    {cat:'alto',    label:'Hipercolesterolemia familiar aislada'},
+  'hf-comp':   {cat:'muyalto', label:'HF + ECVA o + FRCV importante'}
+};
+
+// DM auto-classification from labs (section 4) + duration
+// Returns the strongest match. DM-LOD criteria from labs trump duration-based DM-sin-LOD.
+function classifyDMfromLabs({dm, fg, acr, age, dmAge}){
+  if(dm !== 1) return {cat:null, label:'DM no aplicable', show:false};
+
+  // DM con LOD from labs (any one criterion)
+  if(fg !== null && fg < 45)
+    return {cat:'muyalto', label:`DM con LOD (FG ${fg} <45)`, show:true};
+  if(fg !== null && fg >= 45 && fg < 60 && acr !== null && acr >= 30 && acr <= 300)
+    return {cat:'muyalto', label:`DM con LOD (FG ${fg} en 45-59 + ACR ${acr} en 30-300)`, show:true};
+  if(acr !== null && acr > 200)
+    return {cat:'muyalto', label:`DM con LOD (ACR ${acr} >200)`, show:true};
+
+  // DM sin LOD by duration ≥10a (only if age + dmAge known)
+  if(age !== null && dmAge !== null && dmAge >= 0 && dmAge <= age){
+    const dur = age - dmAge;
+    if(dur >= 10)
+      return {cat:'alto', label:`DM sin LOD (duración ${dur} años, ≥10a)`, show:true};
+    return {cat:null, label:`Duración DM = ${dur} años (<10a). Clasificación analítica insuficiente — usa criterios manuales si aplican.`, show:true};
+  }
+
+  // Nothing auto-detectable
+  return {cat:null, label:'Sin clasificación automática (introduce FG/ACR y edad al dx, o usa criterios manuales).', show:true};
+}
+
+// ERC classification from FG + ACR (per Excel local)
+function classifyERC(fg, acr){
+  if(fg === null) return {cat:null, label:'Falta eGFR'};
+  if(fg < 30) return {cat:'muyalto', label:'ERC muy grave (FG <30)'};
+  if(fg < 45){
+    if(acr === null) return {cat:null, label:'FG 30-44, falta ACR'};
+    if(acr > 30) return {cat:'muyalto', label:'ERC muy grave (FG 30-44 + ACR >30)'};
+    return {cat:'alto', label:'ERC moderada (FG 30-44 + ACR <30)'};
+  }
+  if(fg < 60){
+    if(acr === null) return {cat:null, label:'FG 45-59, falta ACR'};
+    if(acr >= 30 && acr <= 300) return {cat:'alto', label:'ERC moderada (FG 45-59 + ACR 30-300)'};
+    if(acr > 300) return {cat:'alto', label:'ERC moderada (FG 45-59 + ACR >300)'};
+    return {cat:null, label:'FG 45-59 con ACR <30: sin ERC clasificable'};
+  }
+  // fg >= 60
+  if(acr === null) return {cat:null, label:'FG normal, falta ACR'};
+  if(acr > 300) return {cat:'alto', label:'ERC moderada (FG≥60 + ACR >300)'};
+  return {cat:null, label:'Sin ERC clínicamente relevante'};
+}
+
+// Derived modifiers (from numeric inputs)
+const DERIVED_RULES = [
+  {id:'der-ct',  cat:'alto',     label:'CT > 310 mg/dL (auto)',     test:s => s.tc  !== null && s.tc  > 310},
+  {id:'der-ldl', cat:'alto',     label:'c-LDL > 190 mg/dL (auto)',  test:s => s.ldl !== null && s.ldl > 190},
+  {id:'der-pa',  cat:'alto',     label:'PA ≥ 180/110 mmHg (auto)',  test:s => (s.sbp !== null && s.sbp >= 180) || (s.pad !== null && s.pad >= 110)},
+  {id:'der-lpa180', cat:'alto',  label:'Lp(a) > 180 mg/dL (auto)',  test:s => s.lpa !== null && s.lpa > 180},
+  {id:'der-lpa50',  cat:'moderado', label:'Lp(a) > 50 mg/dL (auto)', test:s => s.lpa !== null && s.lpa > 50 && s.lpa <= 180}
+];
+
+const CAT_RANK = {bajo:0, moderado:1, alto:2, muyalto:3};
+const CAT_LABEL = {bajo:'Riesgo Bajo', moderado:'Riesgo Moderado', alto:'Riesgo Alto', muyalto:'Riesgo Muy Alto'};
+const CAT_CLASS = {bajo:'bajo', moderado:'mod', alto:'alto', muyalto:'muy'};
+
+// LDL targets per ESC/EAS 2019/2025
+const LDL_TARGETS = {
+  bajo:    {ldl:'<116 mg/dL', nonHdl:'<145 mg/dL', apoB:'<100 mg/dL'},
+  moderado:{ldl:'<100 mg/dL', nonHdl:'<130 mg/dL', apoB:'<80 mg/dL'},
+  alto:    {ldl:'<70 mg/dL + ↓≥50%', nonHdl:'<100 mg/dL', apoB:'<80 mg/dL'},
+  muyalto: {ldl:'<55 mg/dL + ↓≥50%', nonHdl:'<85 mg/dL',  apoB:'<65 mg/dL'}
+};
+
+// =============================================================
+// RECALC
+// =============================================================
+function $(id){return document.getElementById(id);}
+function getVal(id){const v = $(id).value.trim(); return v===''?null:Number(v);}
+
+function getSelectedSex(){const r=document.querySelector('input[name=sex]:checked'); return r?r.value:null;}
+function getSelectedSmk(){const r=document.querySelector('input[name=smk]:checked'); return r?Number(r.value):null;}
+function getSelectedDM(){return Number(document.querySelector('input[name=dm]:checked').value);}
+
+function getActiveModifiers(state){
+  const list = [];
+  document.querySelectorAll('input[type=checkbox][data-mod]').forEach(cb=>{
+    if(cb.checked){
+      const id = cb.dataset.mod;
+      list.push({id, ...MODIFIERS[id]});
+    }
+  });
+  // Derived from numeric inputs
+  DERIVED_RULES.forEach(r=>{
+    if(r.test(state)) list.push({id:r.id, cat:r.cat, label:r.label, derived:true});
+  });
+  return list;
+}
+
+// HbA1c % NGSP → mmol/mol IFCC
+function hba1cPctToMmol(pct){ return (pct*10.929) - 23.5; }
+// mg/dL → mmol/L (cholesterol)
+function mgdlToMmol(x){ return x/38.67; }
+
+function recalc(){
+  const region = countrySel.value;
+  const age = getVal('age');
+  const sex = getSelectedSex();
+  const smk = getSelectedSmk();
+  const sbp = getVal('sbp');
+  const pad = getVal('pad');
+  const tc  = getVal('tc');
+  const hdl = getVal('hdl');
+  const ldl = getVal('ldl');
+  const lpa = getVal('lpa');
+  const egfr = getVal('egfr');
+  const acr  = getVal('acr');
+  const dm  = getSelectedDM();
+  const hba1cPct = getVal('hba1c');
+
+  // Resolve dmAge: direct or computed from dmYear
+  const dmAgeMode = (document.querySelector('input[name=dmAgeMode]:checked')||{}).value || 'direct';
+  let dmAge;
+  if(dmAgeMode === 'calc'){
+    const yearDx = getVal('dmYear');
+    const currentYear = new Date().getFullYear();
+    if(age!==null && yearDx!==null){
+      dmAge = age - (currentYear - yearDx);
+      const out = document.getElementById('dmAgeCalcOut');
+      if(out) out.textContent = (dmAge>=0 && dmAge<=age) ? dmAge : '— (revisa el año)';
+    } else {
+      dmAge = null;
+      const out = document.getElementById('dmAgeCalcOut');
+      if(out) out.textContent = '—';
+    }
+  } else {
+    dmAge = getVal('dmAge');
+  }
+
+  // ERC auto-classification + render its panel
+  const erc = classifyERC(egfr, acr);
+  const ercPanel = document.getElementById('ercPanel');
+  if(ercPanel){
+    if(erc.cat){
+      const cls = CAT_CLASS[erc.cat];
+      const map = {bajo:'bajo',mod:'mod',alto:'alto',muy:'muy'};
+      ercPanel.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <div><strong>${erc.label}</strong></div>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--${map[cls]}-bg);color:var(--${map[cls]});padding:3px 9px;border-radius:1px;font-weight:600">→ ${CAT_LABEL[erc.cat]}</span>
+      </div>`;
+    } else {
+      ercPanel.innerHTML = `<em style="color:var(--muted)">${erc.label}.</em>`;
+    }
+  }
+
+  // DM auto-classification from labs + render its panel
+  const dmAuto = classifyDMfromLabs({dm, fg:egfr, acr, age, dmAge});
+  const dmAutoPanel = document.getElementById('dmAutoPanel');
+  if(dmAutoPanel){
+    if(dmAuto.cat){
+      const cls = CAT_CLASS[dmAuto.cat];
+      const map = {bajo:'bajo',mod:'mod',alto:'alto',muy:'muy'};
+      dmAutoPanel.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <div><strong>${dmAuto.label}</strong></div>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--${map[cls]}-bg);color:var(--${map[cls]});padding:3px 9px;border-radius:1px;font-weight:600">→ ${CAT_LABEL[dmAuto.cat]}</span>
+      </div>`;
+    } else if(dm===1){
+      dmAutoPanel.innerHTML = `<em style="color:var(--muted)">${dmAuto.label}</em>`;
+    } else {
+      dmAutoPanel.innerHTML = `<em style="color:var(--muted)">Introduce eGFR/ACR (sección 4) y edad al dx para clasificación automática.</em>`;
+    }
+  }
+
+  // State for derived rules
+  const state = {sbp, pad, tc, ldl, lpa};
+  const mods = getActiveModifiers(state);
+  // Add ERC as a derived modifier if classified
+  if(erc.cat) mods.push({id:'der-erc', cat:erc.cat, label:erc.label+' (auto)', derived:true});
+  // Add DM-from-labs derived modifier if classified
+  if(dmAuto.cat) mods.push({id:'der-dm-lab', cat:dmAuto.cat, label:dmAuto.label+' (auto)', derived:true});
+
+  const body = $('resultBody');
+
+  // ---- Determine modifier-based category ----
+  let modCat = null;
+  let modReasons = [];
+  if(mods.length){
+    let topRank = -1;
+    mods.forEach(m=>{
+      if(CAT_RANK[m.cat] > topRank){ topRank = CAT_RANK[m.cat]; modCat = m.cat; }
+    });
+    modReasons = mods.filter(m=>CAT_RANK[m.cat]===topRank).map(m=>m.label);
+  }
+
+  // Modifiers that override SCORE2 entirely (clinical exclusions per ESC 2021)
+  const overrideIds = ['ecva-clin','ecva-img','dm-lod','der-dm-lab','der-erc','hf-iso','hf-comp'];
+  const isClinicalOverride = mods.some(m => overrideIds.includes(m.id) && m.cat==='muyalto');
+
+  // ---- SCORE2 calculation requires basic inputs ----
+  const baseInputsOk = age!==null && sex && smk!==null && sbp!==null && tc!==null && hdl!==null;
+  if(!baseInputsOk && !modCat){
+    body.innerHTML = `<div class="empty">
+      <svg class="ico-svg" width="100" height="56" viewBox="0 0 100 56" aria-hidden="true">
+        <path d="M 4 28 L 22 28 L 26 12 L 33 44 L 40 16 L 47 36 L 53 28 L 96 28"
+              fill="none" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" class="ecg-line"/>
+      </svg>
+      <p class="empty-text">Complete los datos del paciente<br>para calcular el riesgo cardiovascular</p>
+    </div>`;
+    return;
+  }
+
+  let scorePct = null;
+  let algoUsed = '—';
+  let scoreCat = null;
+  let scoreError = null;
+
+  if(baseInputsOk){
+    if(age < 40){
+      scoreError = 'SCORE2 no validado en <40 años. Considerar riesgo a 30 años o evaluar factores individuales.';
+    } else if(age > 89){
+      scoreError = 'SCORE2-OP solo validado hasta 89 años.';
+    } else {
+      const tcMmol = mgdlToMmol(tc);
+      const hdlMmol = mgdlToMmol(hdl);
+      try{
+        if(dm===1 && age <= 69){
+          if(hba1cPct===null || egfr===null || dmAge===null){
+            scoreError = 'Para SCORE2-Diabetes faltan: HbA1c, eGFR y/o edad al diagnóstico de DM.';
+          } else {
+            const hba1cMmol = hba1cPctToMmol(hba1cPct);
+            scorePct = score2Diabetes(region, age, sex, smk, sbp, tcMmol, hdlMmol, dmAge, hba1cMmol, egfr);
+            algoUsed = 'SCORE2-Diabetes (40-69a, DM2)';
+          }
+        } else if(age >= 70){
+          scorePct = score2OP(region, age, sex, smk, sbp, tcMmol, hdlMmol, dm);
+          algoUsed = 'SCORE2-OP (≥70a' + (dm?', DM como predictor':'') + ')';
+        } else {
+          scorePct = score2(region, age, sex, smk, sbp, tcMmol, hdlMmol, dm);
+          algoUsed = 'SCORE2 (40-69a, sin DM)';
+        }
+      } catch(e){ scoreError = 'Error de cálculo: '+e.message; }
+    }
+    if(scorePct!==null) scoreCat = score2Category(scorePct, age);
+  }
+
+  // ---- Final category = max(SCORE2, modifier) ----
+  let finalCat = null;
+  let finalReason = '';
+  if(scoreCat && modCat){
+    if(CAT_RANK[scoreCat] >= CAT_RANK[modCat]){
+      finalCat = scoreCat;
+      finalReason = `Categoría según SCORE2 (% calculado).`;
+    } else {
+      finalCat = modCat;
+      finalReason = `Reclasificado por modificador clínico — ${modReasons.join('; ')}`;
+    }
+  } else if(scoreCat){
+    finalCat = scoreCat;
+    finalReason = `Categoría según SCORE2 (% calculado).`;
+  } else if(modCat){
+    finalCat = modCat;
+    finalReason = `Categoría por modificador clínico (sin cálculo SCORE2) — ${modReasons.join('; ')}`;
+  }
+
+  // ---- Render ----
+  let html = '';
+
+  // SCORE2 section
+  if(scorePct !== null){
+    html += `<div class="score-display">
+      <div class="label">Riesgo CV a 10 años</div>
+      <div class="value">${scorePct.toFixed(1)}<span class="pct">%</span></div>
+      <div class="algo">${algoUsed}</div>
+    </div>`;
+  } else if(scoreError){
+    html += `<div class="alert warn"><strong>SCORE2 no calculado:</strong> ${scoreError}</div>`;
+  }
+
+  // Override warning
+  if(isClinicalOverride && scorePct !== null){
+    html += `<div class="alert info"><strong>Aviso clínico ESC:</strong> Por las condiciones marcadas (ECVA, DM con LOD, ERC muy grave o HF), las guías indican <strong>no aplicar SCORE2</strong> y clasificar directamente por criterio clínico. El % calculado se muestra solo a título informativo.</div>`;
+  }
+
+  // Final category card
+  if(finalCat){
+    html += `<div class="cat-card ${CAT_CLASS[finalCat]}">
+      <div class="lab">Categoría final de riesgo</div>
+      <div class="cat">${CAT_LABEL[finalCat]}</div>
+      <div class="reason">${finalReason}</div>
+    </div>`;
+
+    // LDL targets
+    const t = LDL_TARGETS[finalCat];
+    html += `<h3 style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);margin-bottom:6px;font-weight:600">Objetivos lipídicos · ESC/EAS 2019/2025</h3>
+    <div class="target-grid">
+      <div class="target"><div class="lab">c-LDL</div><div class="v">${t.ldl}</div></div>
+      <div class="target"><div class="lab">no-HDL</div><div class="v">${t.nonHdl}</div></div>
+      <div class="target" style="grid-column:span 2"><div class="lab">ApoB</div><div class="v">${t.apoB}</div></div>
+    </div>`;
+
+    // Treatment hints
+    const tip = {
+      'bajo':'Estilo de vida. Sin estatina rutinaria salvo factores adicionales.',
+      'moderado':'Estilo de vida + considerar estatina si LDL persistentemente elevado.',
+      'alto':'Estatina de alta intensidad. Considerar combinación con ezetimiba si no se alcanza objetivo.',
+      'muyalto':'Estatina de alta intensidad + ezetimiba. Si no objetivo, añadir iPCSK9 o ácido bempedoico. En DM2 valorar iSGLT2/arGLP-1.'
+    }[finalCat];
+    html += `<div class="alert ${finalCat==='muyalto'?'danger':'info'}" style="margin-top:10px"><strong>Manejo orientativo:</strong> ${tip}</div>`;
+  }
+
+  // Modifiers summary
+  if(mods.length){
+    html += `<h3 style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);margin:14px 0 6px;font-weight:600">Modificadores activos (${mods.length})</h3>`;
+    html += '<div style="font-size:11.5px;color:var(--ink-soft);line-height:1.55">';
+    mods.forEach(m=>{
+      const c = CAT_CLASS[m.cat];
+      html += `<div style="padding:3px 0">→ ${m.label} <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--${c==='mod'?'mod':c==='bajo'?'bajo':c==='alto'?'alto':'muy'}-bg);color:var(--${c==='mod'?'mod':c==='bajo'?'bajo':c==='alto'?'alto':'muy'});padding:1px 5px;border-radius:1px;margin-left:4px">${CAT_LABEL[m.cat].replace('Riesgo ','')}</span></div>`;
+    });
+    html += '</div>';
+  }
+
+  // References
+  html += `<div class="refs">
+    <strong>Notas:</strong> SCORE2 estima riesgo CV a 10 años (fatal + no fatal). Umbrales por edad: &lt;50a: 2.5/7.5/15 · 50-69a: 5/10/20 · ≥70a: 7.5/15/30. Conversión interna: CT/HDL mg/dL → mmol/L (÷38.67); HbA1c % → mmol/mol (×10.929 −23.5). El cálculo es local en el navegador, no se envía nada a servidor.
+  </div>`;
+
+  body.innerHTML = html;
+}
+
+// =============================================================
+// EVENT WIRING
+// =============================================================
+function bind(){
+  document.querySelectorAll('input,select').forEach(el=>{
+    el.addEventListener('input', recalc);
+    el.addEventListener('change', recalc);
+  });
+  document.querySelectorAll('input[name=dm]').forEach(r=>{
+    r.addEventListener('change', e=>{
+      $('dmBlock').classList.toggle('show', e.target.value==='1');
+      recalc();
+    });
+  });
+  // dmAge mode toggle (direct vs calc from year)
+  document.querySelectorAll('input[name=dmAgeMode]').forEach(r=>{
+    r.addEventListener('change', e=>{
+      const calc = e.target.value === 'calc';
+      $('dmAge').style.display    = calc ? 'none' : '';
+      $('dmYear').style.display   = calc ? '' : 'none';
+      $('dmAgeCalcInfo').style.display = calc ? '' : 'none';
+      recalc();
+    });
+  });
+  // Visual feedback on chk
+  document.querySelectorAll('.chk input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', e=>{
+      e.target.closest('.chk').classList.toggle('checked', e.target.checked);
+    });
+  });
+  // Reset
+  $('btnReset').addEventListener('click', e=>{
+    e.preventDefault();
+    if(!confirm('¿Reiniciar todos los datos del paciente?')) return;
+    document.querySelectorAll('input[type=number]').forEach(i=>i.value='');
+    document.querySelectorAll('input[type=checkbox]').forEach(cb=>{cb.checked=false; cb.closest('.chk')?.classList.remove('checked');});
+    document.querySelectorAll('input[name=sex],input[name=smk]').forEach(r=>r.checked=false);
+    document.getElementById('dmN').checked=true;
+    document.getElementById('dmAgeDirect').checked=true;
+    $('dmAge').style.display=''; $('dmYear').style.display='none'; $('dmAgeCalcInfo').style.display='none';
+    $('dmBlock').classList.remove('show');
+    countrySel.value='Low';
+    syncRegion();
+    recalc();
+  });
+}
+bind();
+recalc();
+</script>
+</body>
+</html>
