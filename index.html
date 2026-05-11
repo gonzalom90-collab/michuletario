@@ -149,7 +149,8 @@ header{
 .card:hover{border-color:var(--line-deep);box-shadow:var(--shadow-md)}
 .card+.card{margin-top:18px}
 
-.card h2{
+.card h2,
+.result-header h2{
   font-family:'Fraunces',Georgia,serif;
   font-size:19px;
   font-weight:700;
@@ -157,14 +158,17 @@ header{
   letter-spacing:-0.012em;
   line-height:1.2;
   color:var(--ink);
-  margin-bottom:18px;
-  padding-bottom:14px;
-  border-bottom:1px solid var(--line-soft);
   display:flex;
   align-items:center;
   gap:12px;
 }
-.card h2 .num{
+.card h2{
+  margin-bottom:18px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line-soft);
+}
+.card h2 .num,
+.result-header h2 .num{
   flex-shrink:0;
   width:30px;
   height:30px;
@@ -423,10 +427,6 @@ input[readonly]{
   justify-content:space-between;
 }
 .result-header h2{
-  font-family:'Fraunces',Georgia,serif;
-  font-size:19px;
-  font-weight:700;
-  font-variation-settings:"opsz" 24,"SOFT" 50;
   margin:0;
   border:none;
   padding:0;
@@ -906,7 +906,7 @@ footer strong{color:var(--ink-soft);font-weight:600}
   <div>
     <div class="result">
       <div class="result-header">
-        <h2><span class="num">R</span>Resultado</h2>
+        <h2><span class="num">R</span><span>Resultado</span></h2>
       </div>
       <div class="result-body" id="resultBody">
         <div class="empty">
@@ -1470,3 +1470,4 @@ recalc();
 </script>
 </body>
 </html>
+
