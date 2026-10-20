@@ -65,6 +65,7 @@ Almudena deja peticiones como comentarios en el Artifact. Léelos con `ArtifactC
 
 ## Enlaces
 
+- Web (Cloudflare): https://michuletario.gonzalom-90.workers.dev/ (calculadora RCV) y https://michuletario.gonzalom-90.workers.dev/vacunas/ (vacunas)
 - Repositorio: https://github.com/gonzalom90-collab/michuletario
 - Artifact (versión con inicio de sesión en Claude): https://claude.ai/artifact/YWdbu2WqM6hCGapt79ZhxK
 - Copia sin conexión para Almudena: `C:\Users\almud\Documents\1 Trabajo\Teoría y artículos\Vacunas\Herramienta de consulta de vacunas\`
