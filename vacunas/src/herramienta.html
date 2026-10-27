@@ -250,6 +250,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
 .cl-box h3{margin:0 0 6px;font-size:.9rem}
 .cl-box p{margin:0}
 .cl-foot{font-size:.74rem;color:var(--text-sec);margin:12px 0 0;max-width:1100px}
+.cl-foot a{color:var(--primary)}
+.classif-btn + .classif-btn{margin-top:10px}
+.iv-table{min-width:560px}
+.iv-table td.cl-type{width:200px}
+.iv-table td.iv-int{font-size:1.25rem;font-weight:800;text-align:center;white-space:nowrap;color:color-mix(in srgb,var(--c) 75%,var(--text))}
+.iv-note{max-width:1100px;margin:12px 0 0}
+.iv-h{font-size:1.05rem;font-weight:800;margin:22px 0 0}
+.cl-box ul{margin:0;padding-left:18px}
+.cl-box li{margin:3px 0}
 
 /* Vaccine detail */
 .vaccine-detail{max-width:680px;margin:0 auto}
@@ -421,6 +430,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
         <li><strong>Calendario de vacunaci&oacute;n e inmunizaci&oacute;n para toda la vida 2026</strong>. Comunidad de Madrid. <span>Edici&oacute;n 2026.</span></li>
         <li><strong>Calendario acelerado de vacunaci&oacute;n 2026</strong>. Comunidad de Madrid. <span>Edici&oacute;n febrero 2026 (D.L.: M-4330-2026).</span></li>
         <li><strong>Clasificaci&oacute;n de las vacunas</strong>. Resumen de repaso. <span>Octubre 2026.</span></li>
+        <li><strong>Intervalo m&iacute;nimo entre vacunas distintas no simult&aacute;neas</strong>. Basado en el Manual de Inmunizaciones del CAV-AEP, cap&iacute;tulo 2. <span>Consultado en octubre de 2026.</span></li>
         <li><strong>Grupos de poblaci&oacute;n diana de vacunaci&oacute;n antigripal</strong>. Comunidad de Madrid. <span>Temporada 2026-27 (el documento no indica fecha de elaboraci&oacute;n).</span></li>
         <li><strong>Documento t&eacute;cnico de vacunaci&oacute;n frente a COVID-19</strong>. Comunidad de Madrid. <span>Temporada 2026-27, fecha de elaboraci&oacute;n 16/09/2026.</span></li>
         <li><strong>Mpox</strong>: web <a href="https://www.comunidad.madrid/salud/mpox" target="_blank">comunidad.madrid/salud/mpox</a>. <span>Consultada el 09/10/2026.</span></li>
@@ -451,6 +461,44 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
     <p class="view-sub">Seleccione la vacuna sobre la que desea consultar.</p>
     <div class="vaccine-grid" id="vaccineGrid"></div>
     <button class="classif-btn" onclick="showView('classif')">Clasificaci&oacute;n de vacunas &rarr;</button>
+    <button class="classif-btn" onclick="showView('interv')">Intervalo entre vacunas &rarr;</button>
+  </section>
+
+  <!-- VACCINE INTERVALS -->
+  <section class="view" id="view-interv">
+    <h2 class="view-title">Intervalo m&iacute;nimo entre vacunas distintas no simult&aacute;neas</h2>
+    <p class="view-sub">Principios generales &middot; Basado en la Tabla 2.1 y el texto del cap&iacute;tulo 2 del Manual de Inmunizaciones en l&iacute;nea del CAV-AEP.</p>
+    <div class="cl-scroll">
+    <table class="cl-table iv-table">
+      <thead><tr><th>Tipos de vacuna</th><th>Intervalo m&iacute;nimo</th><th>Comentario</th></tr></thead>
+      <tbody>
+        <tr data-c style="--c:var(--cl-ent)"><td class="cl-type">2 inactivadas</td><td class="iv-int">Ninguno</td><td>Pueden administrarse antes o despu&eacute;s de cualquier otra vacuna</td></tr>
+        <tr data-c style="--c:var(--cl-sub)"><td class="cl-type">Inactivada + atenuada</td><td class="iv-int">Ninguno</td><td>Sin intervalo, en cualquier orden</td></tr>
+        <tr data-c style="--c:var(--cl-viva)"><td class="cl-type">2 atenuadas<small>no simult&aacute;neas</small></td><td class="iv-int">4 semanas*</td><td>Un intervalo m&aacute;s corto puede interferir con la respuesta a la segunda vacuna</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="cl-box iv-note" style="--c:var(--cl-vec)"><p><strong>*</strong> Solo si <strong>ambas</strong> vacunas se administran por <strong>v&iacute;a parenteral</strong>. No aplica si una es oral o intranasal.</p></div>
+    <h3 class="iv-h">Excepciones y particularidades</h3>
+    <div class="cl-boxes iv-boxes">
+      <div class="cl-box" style="--c:var(--cl-vec)"><h3>Fiebre amarilla y triple v&iacute;rica (SRP / SR / SRPV)</h3><ul>
+        <li>Con vacunas vivas parenterales monocomponentes o con la gripe intranasal: sin intervalo.</li>
+        <li>Con SRP, SR o SRPV: lo ideal es separarlas 4 semanas. Si la protecci&oacute;n es urgente, pueden darse juntas o con menos intervalo.</li>
+        <li>En ese caso, valorar una dosis extra de SRP 4 semanas despu&eacute;s y revacunar de fiebre amarilla a los 10 a&ntilde;os si persiste el riesgo.</li></ul></div>
+      <div class="cl-box" style="--c:var(--cl-viva)"><h3>BCG</h3><ul>
+        <li>Es una vacuna viva parenteral: separarla 4 semanas de otras vivas parenterales si no se ponen el mismo d&iacute;a.</li>
+        <li>BCG y gripe intranasal pueden darse juntas o con cualquier intervalo.</li></ul></div>
+      <div class="cl-box" style="--c:var(--cl-an)"><h3>MenACWY-D (Menactra) y DTPa</h3><ul>
+        <li>Si Menactra se pone 1 mes despu&eacute;s de DTPa, la respuesta empeora.</li>
+        <li>Darlas juntas o poner primero la antimeningoc&oacute;cica.</li>
+        <li>Si ya se puso DTPa, retrasar Menactra al menos 6 meses, salvo riesgo de exposici&oacute;n.</li>
+        <li>Si se puso antes por error, no repetirla.</li></ul></div>
+      <div class="cl-box" style="--c:var(--cl-ent)"><h3>Vacunas orales e intranasales</h3><ul>
+        <li>Polio oral, tifoidea oral (Ty21a), rotavirus y gripe intranasal: sin intervalo especial entre ellas.</li>
+        <li>Pueden darse antes o despu&eacute;s de cualquier otra vacuna.</li></ul></div>
+    </div>
+    <div class="cl-box iv-note" style="--c:var(--cl-pas)"><h3>Prueba de tuberculina e IGRA (apartado 7 del cap&iacute;tulo)</h3><p>La vacuna del sarampi&oacute;n puede suprimir temporalmente la respuesta a la tuberculina y al IGRA. Hacer la prueba el mismo d&iacute;a de la vacunaci&oacute;n o 4&ndash;6 semanas despu&eacute;s.</p></div>
+    <p class="cl-foot">Fuente: CAV-AEP. Manual de Inmunizaciones en l&iacute;nea, cap&iacute;tulo 2 &middot; <a href="https://vacunasaep.org/documentos/manual/cap-2" target="_blank">vacunasaep.org/documentos/manual/cap-2</a> &middot; Consultado en octubre de 2026.</p>
   </section>
 
   <!-- VACCINE CLASSIFICATION -->
