@@ -58,6 +58,10 @@ New-Item -ItemType Directory -Force -Path $doc, (Join-Path $doc 'imagenes'), (Jo
 Copy-Item (Join-Path $repo 'vacunas\index.html') (Join-Path $doc 'vacunas-cm-2026.html') -Force
 Copy-Item (Join-Path $repo 'vacunas\imagenes\*') (Join-Path $doc 'imagenes') -Force
 Copy-Item (Join-Path $repo 'vacunas\mpox\*') (Join-Path $doc 'mpox') -Force
+if (Test-Path (Join-Path $repo 'vacunas\docs')) {
+  New-Item -ItemType Directory -Force -Path (Join-Path $doc 'docs') | Out-Null
+  Copy-Item (Join-Path $repo 'vacunas\docs\*') (Join-Path $doc 'docs') -Force
+}
 $leeme = Join-Path $doc 'LEEME.txt'
 if (Test-Path $leeme) {
   $t = [IO.File]::ReadAllText($leeme, $utf8)

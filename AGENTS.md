@@ -19,6 +19,8 @@ Léelo entero antes de tocar nada. Si algo de aquí no cuadra con lo que ves, pr
 | `vacunas/src/herramienta.html` | **Fuente única** de la herramienta de vacunas. Es un fragmento HTML sin `<!doctype>`, porque también se publica como Claude Artifact | **Sí: aquí se hacen todos los cambios** |
 | `vacunas/index.html` | Página web completa **generada** por el script a partir de la fuente | **Nunca a mano** |
 | `vacunas/imagenes/`, `vacunas/mpox/` | Copias sueltas de recursos (las imágenes ya van incrustadas en base64 dentro de la herramienta) | Sí |
+| `vacunas/docs/` | PDF para pacientes enlazados desde la herramienta con su URL absoluta de Cloudflare (p. ej. `vacunacion-viajero-pacientes.pdf`) | Regenerar desde su fuente |
+| `vacunas/src/viajero-pacientes.html` | Fuente del PDF del viajero. Se imprime a PDF con Edge headless (`--print-to-pdf --no-pdf-header-footer`) | Sí |
 | `scripts/publicar-vacunas.ps1` | Genera `vacunas/index.html`, copia a Documentos, hace commit y push | Sí |
 
 La herramienta de vacunas se ve en la web de Cloudflare de este repo, en la ruta `/vacunas/`.
