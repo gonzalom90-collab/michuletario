@@ -428,6 +428,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
   background:color-mix(in srgb,var(--c) 16%,var(--card));color:var(--text);font-weight:600;font-size:.65rem;
   outline:2px dashed var(--c);outline-offset:-3px;
 }
+.cal-table .cal-link{cursor:pointer}
+.cal-table td.cal-link:hover{filter:brightness(1.12);box-shadow:inset 0 0 0 2px var(--text)}
+.cal-table td.vax-name.cal-link{color:var(--primary)}
+.cal-table td.vax-name.cal-link:hover{filter:none;box-shadow:none;text-decoration:underline}
 .table-notes{font-size:.75rem;color:var(--text-sec);line-height:1.6;margin:14px 0;max-width:800px}
 .table-notes p{margin:3px 0}
 
@@ -2191,15 +2195,17 @@ function buildTable() {
   ages.forEach(a => { html += '<th>' + a + '</th>'; });
   html += '</tr></thead><tbody>';
 
+  const rowCard = {'VRS':'vrs','Hepatitis B':'hb','DTPa / dTpa / Td':'tetanos','Poliomielitis':'polio','Hib':'hib','Neumococo':'neumococo','Meningococo B':'menb','Meningococo C':'menc','Meningococo ACWY':'menacwy','Rotavirus':'rotavirus','SRP (TV)':'srp','Varicela':'varicela','VPH':'vph','Herpes Zóster':'hz','Gripe':'gripe','COVID-19':'covid'};
   rows.forEach(r => {
-    html += '<tr><td class="vax-name">' + r.name + '</td>';
+    const go = ' onclick="showVaccine(\'' + rowCard[r.name] + '\')"';
+    html += '<tr><td class="vax-name cal-link"' + go + ' title="Ver ficha de ' + r.name + '">' + r.name + ' &rarr;</td>';
     r.cells.forEach(c => {
       if (!c) { html += '<td></td>'; return; }
       const [label, key] = c.slice(2).split('|');
       const v = vaxColors[key];
       const style = '--c:' + v.c + (v.t ? ';--ct:' + v.t : '');
       const cls = c.startsWith('S:') ? 'cell-sys' : 'cell-catch';
-      html += '<td class="' + cls + '" style="' + style + '" title="' + v.n + '">' + label + '</td>';
+      html += '<td class="' + cls + ' cal-link" style="' + style + '" title="' + v.n + ' · Ver ficha"' + go + '>' + label + '</td>';
     });
     html += '</tr>';
   });
