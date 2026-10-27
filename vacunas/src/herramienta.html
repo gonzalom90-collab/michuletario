@@ -124,6 +124,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
 .home-sources strong{color:var(--text);font-weight:600}
 .home-sources a{color:var(--primary)}
 .home-updated{margin:10px 0 0}
+.hs-det{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.hs-det>summary{cursor:pointer;padding:10px 14px;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text-sec)}
+.hs-det[open]>summary{border-bottom:1px solid var(--border)}
+.hs-det>ul{padding:10px 14px 12px 32px}
 
 /* Age form */
 .age-form{
@@ -505,7 +509,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
     </div>
 
     <div class="home-sources">
-      <h3>Bibliograf&iacute;a y edici&oacute;n</h3>
+      <details class="hs-det">
+      <summary>Bibliograf&iacute;a y edici&oacute;n</summary>
       <ul>
         <li><strong>Calendario de vacunaci&oacute;n e inmunizaci&oacute;n para toda la vida 2026</strong>. Comunidad de Madrid. <span>Edici&oacute;n 2026.</span></li>
         <li><strong>Calendario acelerado de vacunaci&oacute;n 2026</strong>. Comunidad de Madrid. <span>Edici&oacute;n febrero 2026 (D.L.: M-4330-2026).</span></li>
@@ -519,6 +524,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
         <li><strong>Documento t&eacute;cnico de vacunaci&oacute;n frente a COVID-19</strong>. Comunidad de Madrid. <span>Temporada 2026-27, fecha de elaboraci&oacute;n 16/09/2026.</span></li>
         <li><strong>Mpox</strong>: web <a href="https://www.comunidad.madrid/salud/mpox" target="_blank">comunidad.madrid/salud/mpox</a>. <span>Consultada el 09/10/2026.</span></li>
       </ul>
+      </details>
       <p class="home-updated">&Uacute;ltima actualizaci&oacute;n de la herramienta: <strong>27/10/2026</strong></p>
     </div>
   </section>
