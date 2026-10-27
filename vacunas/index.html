@@ -37,6 +37,15 @@
   --nofin-bg: #fdf0e1;
   --alert: #c0262d;
   --alert-bg: #fde8e8;
+  --gray: #5b6573;
+  --cl-viva: #c0392b;
+  --cl-ent: #217a4b;
+  --cl-sub: #2d7fbf;
+  --cl-an: #7d3c98;
+  --cl-vec: #d68910;
+  --cl-pas: #5d6d7e;
+  --cl-ok: #1e7a3c;
+  --cl-no: #c0262d;
   --radius: 14px;
   --radius-sm: 8px;
   --shadow: 0 1px 4px rgba(0,0,0,0.07);
@@ -47,7 +56,7 @@
   --border:#253545;--due:#fbbf24;--due-bg:#2a1e08;--done:#3dd8c5;--done-bg:#12332e;
   --risk:#b197fc;--risk-bg:#1c1430;--info:#60a5fa;--info-bg:#0c1e36;
   --pedia:#60a5fa;--pedia-bg:#152a45;
-  --fin:#4ade80;--fin-bg:#10291a;--nofin:#fb923c;--nofin-bg:#2e1c0c;--alert:#f87171;--alert-bg:#3a1215;
+  --fin:#4ade80;--fin-bg:#10291a;--nofin:#fb923c;--nofin-bg:#2e1c0c;--alert:#f87171;--alert-bg:#3a1215;--gray:#94a3b8;--cl-ok:#4ade80;--cl-no:#f87171;
   --shadow:0 1px 4px rgba(0,0,0,0.3);color-scheme:dark;
 }}
 :root[data-theme="dark"]{
@@ -56,7 +65,7 @@
   --border:#253545;--due:#fbbf24;--due-bg:#2a1e08;--done:#3dd8c5;--done-bg:#12332e;
   --risk:#b197fc;--risk-bg:#1c1430;--info:#60a5fa;--info-bg:#0c1e36;
   --pedia:#60a5fa;--pedia-bg:#152a45;
-  --fin:#4ade80;--fin-bg:#10291a;--nofin:#fb923c;--nofin-bg:#2e1c0c;--alert:#f87171;--alert-bg:#3a1215;
+  --fin:#4ade80;--fin-bg:#10291a;--nofin:#fb923c;--nofin-bg:#2e1c0c;--alert:#f87171;--alert-bg:#3a1215;--gray:#94a3b8;--cl-ok:#4ade80;--cl-no:#f87171;
   --shadow:0 1px 4px rgba(0,0,0,0.3);color-scheme:dark;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline:16px;padding-block:0;}
@@ -224,6 +233,32 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
   font-size:.75rem;font-weight:800;padding:4px 8px;border-radius:6px;
   white-space:nowrap;flex-shrink:0;
 }
+.classif-btn{
+  display:flex;justify-content:center;align-items:center;gap:8px;width:100%;max-width:720px;margin:22px auto 0;
+  background:var(--gray);color:var(--card);border:none;border-radius:var(--radius-sm);
+  padding:14px 16px;font-family:var(--ff);font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:var(--shadow);
+}
+.classif-btn:hover{filter:brightness(1.08)}
+
+/* Clasificacion de vacunas */
+.cl-scroll{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);max-width:1100px}
+.cl-table{border-collapse:collapse;width:100%;min-width:820px;background:var(--card);font-size:.82rem;line-height:1.45}
+.cl-table th{background:var(--text);color:var(--card);text-align:left;padding:9px 10px;font-size:.78rem;font-weight:700}
+.cl-table td{padding:8px 10px;border-bottom:1px solid var(--card);vertical-align:middle;color:var(--text)}
+.cl-table td.cl-type{color:#fff;font-weight:800;text-align:center;text-transform:uppercase;font-size:.8rem;letter-spacing:.02em;background:var(--c);width:130px}
+.cl-table td.cl-type small{display:block;text-transform:none;font-weight:500;font-size:.72rem;opacity:.9;letter-spacing:0}
+.cl-table tr[data-c] td:not(.cl-type){background:color-mix(in srgb,var(--c) 11%,var(--card))}
+.cl-table td.cl-sub{font-weight:700;white-space:nowrap}
+.cl-ok{color:var(--cl-ok);font-weight:700}
+.cl-no{color:var(--cl-no);font-weight:700}
+.cl-tag{display:inline-block;font-size:.7rem;font-weight:800;padding:1px 6px;border-radius:4px;margin-bottom:2px}
+.cl-tag.ti{background:color-mix(in srgb,var(--cl-no) 18%,var(--card));color:var(--cl-no)}
+.cl-tag.td{background:color-mix(in srgb,var(--cl-ok) 18%,var(--card));color:var(--cl-ok)}
+.cl-boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;max-width:1100px;margin:16px 0 0}
+.cl-box{border-radius:var(--radius-sm);padding:12px 14px;border-left:5px solid var(--c);background:color-mix(in srgb,var(--c) 11%,var(--card));font-size:.84rem;line-height:1.5;color:var(--text)}
+.cl-box h3{margin:0 0 6px;font-size:.9rem}
+.cl-box p{margin:0}
+.cl-foot{font-size:.74rem;color:var(--text-sec);margin:12px 0 0;max-width:1100px}
 
 /* Vaccine detail */
 .vaccine-detail{max-width:680px;margin:0 auto}
@@ -260,6 +295,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
 }
 .vax-meta a{color:var(--primary);font-weight:600;font-size:.82rem;text-decoration:none}
 .vax-meta a:hover{text-decoration:underline}
+.vax-meta .ft-links{font-size:.82rem;color:var(--text-sec);flex-basis:100%;line-height:1.7}
 .detail-block.fin{background:var(--fin-bg);border-left:5px solid var(--fin)}
 .detail-block.nofin{background:var(--nofin-bg);border-left:5px solid var(--nofin)}
 .fin-tag{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:5px;font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;vertical-align:middle;color:var(--card)}
@@ -393,6 +429,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
       <ul>
         <li><strong>Calendario de vacunaci&oacute;n e inmunizaci&oacute;n para toda la vida 2026</strong>. Comunidad de Madrid. <span>Edici&oacute;n 2026.</span></li>
         <li><strong>Calendario acelerado de vacunaci&oacute;n 2026</strong>. Comunidad de Madrid. <span>Edici&oacute;n febrero 2026 (D.L.: M-4330-2026).</span></li>
+        <li><strong>Clasificaci&oacute;n de las vacunas</strong>. Resumen de repaso. <span>Octubre 2026.</span></li>
         <li><strong>Grupos de poblaci&oacute;n diana de vacunaci&oacute;n antigripal</strong>. Comunidad de Madrid. <span>Temporada 2026-27 (el documento no indica fecha de elaboraci&oacute;n).</span></li>
         <li><strong>Documento t&eacute;cnico de vacunaci&oacute;n frente a COVID-19</strong>. Comunidad de Madrid. <span>Temporada 2026-27, fecha de elaboraci&oacute;n 16/09/2026.</span></li>
         <li><strong>Mpox</strong>: web <a href="https://www.comunidad.madrid/salud/mpox" target="_blank">comunidad.madrid/salud/mpox</a>. <span>Consultada el 09/10/2026.</span></li>
@@ -422,6 +459,106 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
     <h2 class="view-title">Consulta por vacuna</h2>
     <p class="view-sub">Seleccione la vacuna sobre la que desea consultar.</p>
     <div class="vaccine-grid" id="vaccineGrid"></div>
+    <button class="classif-btn" onclick="showView('classif')">Clasificaci&oacute;n de vacunas &rarr;</button>
+  </section>
+
+  <!-- VACCINE CLASSIFICATION -->
+  <section class="view" id="view-classif">
+    <h2 class="view-title">Clasificaci&oacute;n de las vacunas</h2>
+    <p class="view-sub">Tipos, ejemplos, respuesta inmune y claves cl&iacute;nicas para la consulta de Atenci&oacute;n Primaria.</p>
+    <div class="cl-scroll">
+    <table class="cl-table">
+      <thead><tr><th>Tipo</th><th>Subtipo</th><th>Ejemplos</th><th>Respuesta inmune</th><th>Claves cl&iacute;nicas</th></tr></thead>
+      <tbody>
+        <tr data-c style="--c:var(--cl-viva)">
+          <td class="cl-type" rowspan="2">Vivas atenuadas</td>
+          <td class="cl-sub">V&iacute;ricas</td>
+          <td>Triple v&iacute;rica (SRP), varicela, fiebre amarilla, rotavirus (oral), gripe intranasal, dengue (Qdenga)</td>
+          <td rowspan="2">Humoral + celular, intensa y duradera (1&ndash;2 dosis)</td>
+          <td rowspan="2"><span class="cl-no">&#10006; Embarazo e inmunodepresi&oacute;n grave</span><br>Separar <strong>4 semanas</strong> de otra viva parenteral (si no se ponen el mismo d&iacute;a)<br>Las inmunoglobulinas interfieren con SRP y varicela (no con las orales ni con la de la fiebre amarilla)</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-viva)">
+          <td class="cl-sub">Bacterianas</td>
+          <td>BCG, tifoidea oral (Ty21a), c&oacute;lera oral (Vaxchora)</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-ent)">
+          <td class="cl-type">Inactivadas<small>microorganismo entero</small></td>
+          <td class="cl-sub">Entero inactivado</td>
+          <td>Polio inactivada (VPI), hepatitis A, rabia, encefalitis japonesa, encefalitis por garrapatas, c&oacute;lera (Dukoral)</td>
+          <td>Sobre todo humoral</td>
+          <td><span class="cl-ok">&#10004; Seguras en inmunodeprimidos</span><br>Varias dosis y refuerzos</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-sub)">
+          <td class="cl-type" rowspan="5">Inactivadas<small>subunidades</small></td>
+          <td class="cl-sub">Toxoides</td>
+          <td>T&eacute;tanos, difteria</td>
+          <td>Humoral (antitoxina)</td>
+          <td>Refuerzos peri&oacute;dicos</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-sub)">
+          <td class="cl-sub">Proteicas purificadas</td>
+          <td>Tos ferina acelular (pa), gripe fraccionada o de subunidades</td>
+          <td>Humoral</td>
+          <td>dTpa en el embarazo (semanas 27&ndash;36)</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-sub)">
+          <td class="cl-sub">Recombinantes</td>
+          <td>Hepatitis B, VPH (VLP), z&oacute;ster (Shingrix), MenB (Bexsero, Trumenba), VRS (Arexvy, Abrysvo)</td>
+          <td>Humoral (+ celular con adyuvantes potentes)</td>
+          <td><span class="cl-ok">&#10004; Shingrix en inmunodeprimidos</span></td>
+        </tr>
+        <tr data-c style="--c:var(--cl-sub)">
+          <td class="cl-sub">Polisac&aacute;ridas puras</td>
+          <td>Neumococo 23-valente (VNP23), tifoidea Vi</td>
+          <td><span class="cl-tag ti">T-INDEPENDIENTE</span><br>IgM, sin memoria</td>
+          <td><span class="cl-no">&#10006; Poco eficaces en &lt;2 a&ntilde;os</span><br>Sin efecto refuerzo</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-sub)">
+          <td class="cl-sub">Conjugadas</td>
+          <td>Hib, neumococo conjugada (VNC13/15/20/21), MenC, MenACWY</td>
+          <td><span class="cl-tag td">T-DEPENDIENTE</span><br>IgG y memoria</td>
+          <td><span class="cl-ok">&#10004; Eficaces en lactantes</span><br>Reducen el estado de portador</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-an)">
+          <td class="cl-type">&Aacute;cidos nucleicos</td>
+          <td class="cl-sub">ARNm</td>
+          <td>COVID-19 (Comirnaty, Spikevax), VRS (mResvia)</td>
+          <td>Humoral + celular</td>
+          <td>No son vivas: <span class="cl-ok">&#10004; inmunodeprimidos y embarazo (COVID-19)</span></td>
+        </tr>
+        <tr data-c style="--c:var(--cl-vec)">
+          <td class="cl-type" rowspan="2">Vectores v&iacute;ricos</td>
+          <td class="cl-sub">No replicativos</td>
+          <td>&Eacute;bola (Zabdeno + Mvabea), mpox/viruela (Imvanex, MVA)</td>
+          <td rowspan="2">Humoral + celular</td>
+          <td><span class="cl-ok">&#10004; Imvanex en inmunodeprimidos</span></td>
+        </tr>
+        <tr data-c style="--c:var(--cl-vec)">
+          <td class="cl-sub">Replicativos</td>
+          <td>&Eacute;bola (Ervebo, VSV-ZEBOV)</td>
+          <td>Uso en brotes</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-pas)">
+          <td class="cl-type" rowspan="2">Inmunizaci&oacute;n pasiva<small>(no son vacunas)</small></td>
+          <td class="cl-sub">Inmunoglobulinas</td>
+          <td>Antitet&aacute;nica, antirr&aacute;bica, anti-HB, varicela-z&oacute;ster</td>
+          <td rowspan="2">Protecci&oacute;n inmediata y temporal. Sin memoria</td>
+          <td>Posexposici&oacute;n, junto con la vacuna cuando procede</td>
+        </tr>
+        <tr data-c style="--c:var(--cl-pas)">
+          <td class="cl-sub">Anticuerpos monoclonales</td>
+          <td>Nirsevimab, clesrovimab (VRS en lactantes)</td>
+          <td>Una dosis cubre la temporada de VRS</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="cl-boxes">
+      <div class="cl-box" style="--c:var(--cl-viva)"><h3>Si es VIVA&hellip;</h3><p><span class="cl-no">CONTRAINDICADA</span> en el <strong>embarazo</strong> y la <strong>inmunodepresi&oacute;n</strong>. Respetar el <strong>intervalo de 4 semanas</strong> con otra viva parenteral (si no se ponen el mismo d&iacute;a).</p></div>
+      <div class="cl-box" style="--c:var(--cl-sub)"><h3>Polisac&aacute;rida vs. conjugada</h3><p>Polisac&aacute;rida pura: sin memoria, no &uacute;til en &lt;2 a&ntilde;os. Conjugada: se une a una prote&iacute;na, genera respuesta T-dependiente, memoria y eficacia en lactantes.</p></div>
+      <div class="cl-box" style="--c:var(--cl-pas)"><h3>Otras clasificaciones</h3><p>Monovalente / polivalente (VNC20, VPH-9) / <strong>combinada</strong> (hexavalente DTPa-VPI-Hib-HB). Seg&uacute;n su uso: sistem&aacute;ticas, de riesgo, del viajero y posexposici&oacute;n.</p></div>
+    </div>
+    <p class="cl-foot">Resumen de repaso &middot; Octubre 2026 &middot; Verificar indicaciones con el calendario vigente de la Comunidad de Madrid y las fichas t&eacute;cnicas.</p>
   </section>
 
   <!-- VACCINE DETAIL -->
@@ -867,7 +1004,7 @@ const vaccines = [
 
 const detail = {
 vph: `<h2>Virus del Papiloma Humano (VPH)</h2>
-<div class="vax-meta"><span class="vax-commercial">Gardasil 9®</span> <span class="vax-type">(vacuna recombinante, no viva)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=gardasil+9" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-type">(vacuna recombinante, no viva)</span><span class="vax-route">Vía i.m.</span></div>
 <div class="detail-block fin"><h3>Vacunación sistemática <span class="fin-tag">Financiada</span></h3>
 <p><strong>12 años:</strong> <span class="dose-badge pedia">1 dosis</span> a niñas y niños.</p>
 <p><strong>Captación hasta 18 años:</strong> <span class="dose-badge">1 dosis</span> a mujeres y varones no vacunados.</p>
@@ -901,7 +1038,7 @@ vph: `<h2>Virus del Papiloma Humano (VPH)</h2>
 <p>Vacuna con indicación exclusivamente profiláctica. No tiene efecto sobre infecciones activas por VPH ni enfermedad clínica existente.</p></div>`,
 
 tetanos: `<h2>Difteria, Tétanos y Tosferina</h2>
-<div class="vax-meta"><span class="vax-commercial">DTPa hexavalente / dTpa Boostrix® / Td Diftavax®</span> <span class="vax-type">(inactivadas)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=boostrix" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">DTPa hexavalente / dTpa / Td</span> <span class="vax-type">(inactivadas)</span><span class="vax-route">Vía i.m.</span></div>
 <div class="detail-block"><h3>Vacunación infantil (DTPa)</h3>
 <p>3 dosis a los <span class="dose-badge pedia">2 meses</span><span class="dose-badge pedia">4 meses</span><span class="dose-badge pedia">11 meses</span> en forma de vacuna hexavalente.</p>
 <p><strong>Refuerzo a los 6 años:</strong> DTPa-VPI (pauta 2+1) o dTpa (pauta 3+1).</p>
@@ -926,7 +1063,7 @@ tetanos: `<h2>Difteria, Tétanos y Tosferina</h2>
 </div>`,
 
 neumococo: `<h2>Neumococo</h2>
-<div class="vax-meta"><span class="vax-commercial">Vaxneuvance® (VNC15) / Prevenar 20® (VNC20)</span> <span class="vax-type">(conjugadas, inactivadas)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=prevenar+20" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">VNC15 / VNC20</span> <span class="vax-type">(conjugadas, inactivadas)</span><span class="vax-route">Vía i.m.</span></div>
 <div class="detail-block"><h3>Vacunación infantil</h3>
 <p>VNC15 (vacuna conjugada 15-valente) con pauta 2+1: <span class="dose-badge pedia">2 meses</span><span class="dose-badge pedia">4 meses</span><span class="dose-badge pedia">11 meses</span></p>
 <p>Niños con condiciones de riesgo: pauta 3+1 (2, 4, 6, 11 meses) + VNP23 a partir de los 2 años.</p>
@@ -950,7 +1087,7 @@ neumococo: `<h2>Neumococo</h2>
 </div>`,
 
 covid: `<h2>COVID-19</h2>
-<div class="vax-meta"><span class="vax-commercial">Comirnaty® XFG (ARNm) / Bimervax® XFG.1.1 (proteica)</span> <span class="vax-type">(ARNm / proteica recombinante)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=comirnaty" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">Comirnaty® XFG (ARNm) / Bimervax® XFG.1.1 (proteica)</span> <span class="vax-type">(ARNm / proteica recombinante)</span><span class="vax-route">Vía i.m.</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/publico/lista.html?nombre=comirnaty%20xfg" target="_blank">Comirnaty XFG (buscador CIMA) ↗</a> · <a href="https://cima.aemps.es/cima/dochtml/ft/1221709014/FT_1221709014.html" target="_blank">Bimervax XFG.1.1 ↗</a></span></div>
 <div class="detail-block"><h3>Vacunación sistemática — Temporada 2026-27</h3>
 <p>Inicio de campaña: <strong>5 de octubre de 2026</strong>. Se puede vacunar en cualquier momento del año.</p>
 <p><span class="dose-badge">≥70 años</span> 1 dosis.</p>
@@ -1006,7 +1143,7 @@ covid: `<h2>COVID-19</h2>
 </div>`,
 
 gripe: `<h2>Gripe</h2>
-<div class="vax-meta"><span class="vax-commercial">FLUAD® (≥60a) / Fluenz® Trivalente (2-7a, nasal) / Influvac® (6-23m y adultos)</span> <span class="vax-type">(inactivada adyuvada / viva atenuada intranasal / inactivada)</span><span class="vax-route">Vía i.m. o intranasal</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=fluad" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">FLUAD® (≥60a) / Fluenz® Trivalente (2-7a, nasal) / Influvac® (6-23m y adultos)</span> <span class="vax-type">(inactivada adyuvada / viva atenuada intranasal / inactivada)</span><span class="vax-route">Vía i.m. o intranasal</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/dochtml/ft/1241878001/FT_1241878001.html" target="_blank">Fluad ↗</a> · <a href="https://cima.aemps.es/cima/dochtml/ft/1241816001/FT_1241816001.html" target="_blank">Fluenz ↗</a> · <a href="https://cima.aemps.es/cima/dochtml/ft/89673/FT_89673.html" target="_blank">Influvac ↗</a></span></div>
 <div class="detail-block alert"><h3>⚠ Alérgicos a aminoglucósidos</h3>
 <p>Tienen una <strong>vacuna especial que hay que pedir a Salud Pública</strong>.</p>
 </div>
@@ -1066,7 +1203,7 @@ gripe: `<h2>Gripe</h2>
 </div>`,
 
 vrs: `<h2>Virus Respiratorio Sincitial (VRS)</h2>
-<div class="vax-meta"><span class="vax-commercial">Beyfortus® nirsevimab (lactantes) / Arexvy® (adultos)</span> <span class="vax-type">(anticuerpo monoclonal / recombinante adyuvada)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=arexvy" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">Beyfortus® nirsevimab (lactantes) / vacuna (adultos)</span> <span class="vax-type">(anticuerpo monoclonal en lactantes / vacuna en adultos)</span><span class="vax-route">Vía i.m.</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/dochtml/ft/1221689001/FT_1221689001.html" target="_blank">Beyfortus ↗</a></span></div>
 <div class="detail-block"><h3>Lactantes</h3>
 <p>Inmunización con anticuerpo monoclonal <strong>nirsevimab (Beyfortus®)</strong> para:</p>
 <ul><li>Menores de 6 meses al inicio de la temporada</li>
@@ -1090,7 +1227,7 @@ vrs: `<h2>Virus Respiratorio Sincitial (VRS)</h2>
 </div>`,
 
 hb: `<h2>Hepatitis B (VHB)</h2>
-<div class="vax-meta"><span class="vax-commercial">Engerix-B® / HBVAXPRO®</span> <span class="vax-type">(recombinante, inactivada)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=engerix" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">Engerix-B® / HBVAXPRO®</span> <span class="vax-type">(recombinante, inactivada)</span><span class="vax-route">Vía i.m.</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/dochtml/ft/60653/FT_60653.html" target="_blank">Engerix-B 20 µg ↗</a> · <a href="https://cima.aemps.es/cima/dochtml/ft/01183015/FT_01183015.html" target="_blank">HBVAXPRO 40 µg ↗</a></span></div>
 <div class="detail-block"><h3>Vacunación infantil</h3>
 <p>3 dosis a los <span class="dose-badge pedia">2 meses</span><span class="dose-badge pedia">4 meses</span><span class="dose-badge pedia">11 meses</span> (hexavalente).</p>
 <p><strong>Hijos de madre AgHBs+:</strong> VHB monovalente + Ig HB dentro de las 24 horas del nacimiento. Determinación de AgHBs y anticuerpos entre 1-3 meses tras última dosis (no antes de los 9 meses de edad).</p>
@@ -1122,7 +1259,7 @@ hb: `<h2>Hepatitis B (VHB)</h2>
 </div>`,
 
 hz: `<h2>Herpes Zóster (HZ)</h2>
-<div class="vax-meta"><span class="vax-commercial">Shingrix®</span> <span class="vax-type">(recombinante, adyuvada, no viva)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/dochtml/ft/1181272001/FT_1181272001.htm" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">Shingrix®</span> <span class="vax-type">(recombinante, adyuvada, no viva)</span><span class="vax-route">Vía i.m.</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/dochtml/ft/1181272001/FT_1181272001.htm" target="_blank">Shingrix ↗</a></span></div>
 <div class="detail-block fin"><h3>Financiación <span class="fin-tag">Financiada</span></h3>
 <ul><li><strong>Mayores de 65 años:</strong> según calendario vacunal.</li>
 <li><strong>Menores de 65 años:</strong> cuando hayan tenido más de 2 episodios de herpes zóster.</li></ul>
@@ -1150,7 +1287,7 @@ hz: `<h2>Herpes Zóster (HZ)</h2>
 </div>`,
 
 srp: `<h2>Sarampión, Rubéola y Parotiditis</h2>
-<div class="vax-meta"><span class="vax-commercial">Priorix® (TV) / Priorix Tetra® (SRPV)</span> <span class="vax-type">(virus vivos atenuados)</span><span class="vax-route">Vía s.c. o i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=priorix" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">TV / SRPV (tetravírica)</span> <span class="vax-type">(virus vivos atenuados)</span><span class="vax-route">Vía s.c. o i.m.</span></div>
 <div class="detail-block"><h3>Vacunación infantil</h3>
 <p><span class="dose-badge pedia">12 meses</span> 1ª dosis Triple Vírica (TV)</p>
 <p><span class="dose-badge pedia">15 meses</span> 1ª dosis Varicela (VVZ)</p>
@@ -1172,7 +1309,7 @@ srp: `<h2>Sarampión, Rubéola y Parotiditis</h2>
 </div>`,
 
 varicela: `<h2>Varicela (VVZ)</h2>
-<div class="vax-meta"><span class="vax-commercial">Varilrix® / Varivax®</span> <span class="vax-type">(virus vivos atenuados)</span><span class="vax-route">Vía s.c.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=varilrix" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-type">(virus vivos atenuados)</span><span class="vax-route">Vía s.c.</span></div>
 <div class="detail-block"><h3>Vacunación infantil</h3>
 <p><span class="dose-badge pedia">15 meses</span> 1ª dosis VVZ</p>
 <p><span class="dose-badge pedia">3 años</span> 2ª dosis como SRPV (tetravírica)</p>
@@ -1189,7 +1326,7 @@ varicela: `<h2>Varicela (VVZ)</h2>
 </div>`,
 
 menacwy: `<h2>Meningococo ACWY (MenACWY)</h2>
-<div class="vax-meta"><span class="vax-commercial">Nimenrix® / MenQuadfi®</span> <span class="vax-type">(conjugada, inactivada)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=nimenrix" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-type">(conjugada, inactivada)</span><span class="vax-route">Vía i.m.</span></div>
 <div class="detail-block"><h3>Vacunación sistemática</h3>
 <p><span class="dose-badge pedia">12 meses</span> 1 dosis (desde 1/1/2026, sustituye a MenC a los 12 meses).</p>
 <p><span class="dose-badge pedia">12 años</span> 1 dosis en adolescencia.</p>
@@ -1207,7 +1344,7 @@ menacwy: `<h2>Meningococo ACWY (MenACWY)</h2>
 </div>`,
 
 menb: `<h2>Meningococo B (MenB)</h2>
-<div class="vax-meta"><span class="vax-commercial">Bexsero®</span> <span class="vax-type">(recombinante, adyuvada)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=bexsero" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">Bexsero®</span> <span class="vax-type">(recombinante, adyuvada)</span><span class="vax-route">Vía i.m.</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/dochtml/ft/112812001/FT_112812001.html" target="_blank">Bexsero ↗</a></span></div>
 <div class="detail-block"><h3>Vacunación sistemática</h3>
 <p>Nacidos a partir del 1 de noviembre de 2022. Pauta 2+1:</p>
 <p><span class="dose-badge pedia">2 meses</span><span class="dose-badge pedia">4 meses</span><span class="dose-badge pedia">12 meses</span></p>
@@ -1223,14 +1360,14 @@ menb: `<h2>Meningococo B (MenB)</h2>
 </div>`,
 
 menc: `<h2>Meningococo C (MenC)</h2>
-<div class="vax-meta"><span class="vax-commercial">NeisVac-C®</span> <span class="vax-type">(conjugada, inactivada)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=neisvac" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-type">(conjugada, inactivada)</span><span class="vax-route">Vía i.m.</span></div>
 <div class="detail-block"><h3>Vacunación sistemática</h3>
 <p>A partir del 1 de enero de 2026: <span class="dose-badge pedia">1 dosis a los 4 meses</span></p>
 <p>La dosis de refuerzo a los 12 meses se sustituye por MenACWY.</p>
 </div>`,
 
 ha: `<h2>Hepatitis A (VHA)</h2>
-<div class="vax-meta"><span class="vax-commercial">Havrix® / Vaqta®</span> <span class="vax-type">(inactivada)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=havrix" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-type">(inactivada)</span><span class="vax-route">Vía i.m.</span></div>
 <div class="detail-block"><h3>Recomendación general</h3>
 <p><strong>No está recomendada de forma rutinaria.</strong> Solo pre-exposición en personas susceptibles a partir de 12 meses de edad.</p>
 <p>Pauta: <span class="dose-badge">2 dosis</span> (0 y 6 meses).</p>
@@ -1252,7 +1389,7 @@ ha: `<h2>Hepatitis A (VHA)</h2>
 </div>`,
 
 polio: `<h2>Poliomielitis (VPI)</h2>
-<div class="vax-meta"><span class="vax-commercial">En hexavalente / DTPa-VPI (Infanrix®)</span> <span class="vax-type">(inactivada)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=infanrix" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">En hexavalente / DTPa-VPI (Infanrix-IPV®)</span> <span class="vax-type">(inactivada)</span><span class="vax-route">Vía i.m.</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/dochtml/ft/85671/FT_85671.html" target="_blank">Infanrix-IPV ↗</a></span></div>
 <div class="detail-block"><h3>Vacunación infantil</h3>
 <p>4 dosis: <span class="dose-badge pedia">2m</span><span class="dose-badge pedia">4m</span><span class="dose-badge pedia">11m</span> (hexavalente) + <span class="dose-badge pedia">6 años</span> (DTPa-VPI).</p>
 </div>
@@ -1268,7 +1405,7 @@ polio: `<h2>Poliomielitis (VPI)</h2>
 </div>`,
 
 hib: `<h2>Haemophilus influenzae tipo b (Hib)</h2>
-<div class="vax-meta"><span class="vax-commercial">En hexavalente (Infanrix Hexa® / Vaxelis®)</span> <span class="vax-type">(conjugada, inactivada)</span><span class="vax-route">Vía i.m.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=infanrix+hexa" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">En vacuna hexavalente</span> <span class="vax-type">(conjugada, inactivada)</span><span class="vax-route">Vía i.m.</span></div>
 <div class="detail-block"><h3>Vacunación infantil</h3>
 <p>3 dosis a los <span class="dose-badge pedia">2m</span><span class="dose-badge pedia">4m</span><span class="dose-badge pedia">11m</span> (hexavalente).</p>
 </div>
@@ -1282,7 +1419,7 @@ hib: `<h2>Haemophilus influenzae tipo b (Hib)</h2>
 </div>`,
 
 rotavirus: `<h2>Rotavirus (RV)</h2>
-<div class="vax-meta"><span class="vax-commercial">Rotarix®</span> <span class="vax-type">(virus vivos atenuados)</span><span class="vax-route">Vía oral</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=rotarix" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">Rotarix®</span> <span class="vax-type">(virus vivos atenuados)</span><span class="vax-route">Vía oral</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/dochtml/ft/05330009/FT_05330009.html" target="_blank">Rotarix ↗</a></span></div>
 <div class="detail-block"><h3>Vacunación sistemática</h3>
 <p>Desde 1/10/2024 para nacidos a partir del 1/8/2024.</p>
 <p>Vacuna <strong>Rotarix®</strong>: <span class="dose-badge pedia">2 dosis</span> a los 2 y 4 meses de edad.</p>
@@ -1294,7 +1431,7 @@ rotavirus: `<h2>Rotavirus (RV)</h2>
 </div>`,
 
 mpox: `<h2>Mpox (Viruela del mono)</h2>
-<div class="vax-meta"><span class="vax-commercial">IMVANEX® / JYNNEOS®</span> <span class="vax-type">(virus vivo atenuado, no replicativo)</span><span class="vax-route">Vía s.c.</span><a href="https://cima.aemps.es/cima/publico/lista.html?nombre=imvanex" target="_blank">Ficha técnica ↗</a></div>
+<div class="vax-meta"><span class="vax-commercial">IMVANEX® / JYNNEOS®</span> <span class="vax-type">(virus vivo atenuado, no replicativo)</span><span class="vax-route">Vía s.c.</span><span class="ft-links">Ficha técnica: <a href="https://cima.aemps.es/cima/dochtml/ft/113855001/FT_113855001.html" target="_blank">Imvanex ↗</a></span></div>
 <div class="detail-block"><h3>Vacunación pre-exposición (profilaxis preexposición)</h3>
 <p><span class="dose-badge">2 dosis separadas al menos 28 días</span></p>
 <p>Vacuna IMVANEX® / JYNNEOS® (virus modificado, no produce enfermedad ni se transmite).</p>
