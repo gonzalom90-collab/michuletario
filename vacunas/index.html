@@ -458,9 +458,65 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
   .vaccine-grid{grid-template-columns:1fr}
   .option-card .card-icon{width:40px;height:40px;font-size:1.1rem}
 }
+
+/* Menú lateral del chuletario */
+.nav-toggle{
+  width:38px;height:38px;flex-shrink:0;border:none;border-radius:10px;cursor:pointer;
+  background:rgba(255,255,255,0.15);color:#fff;
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0;
+}
+.nav-toggle:hover{background:rgba(255,255,255,0.25)}
+.nav-toggle:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.nav-toggle span{display:block;width:18px;height:2px;border-radius:2px;background:currentColor;transition:transform .2s,opacity .2s}
+.nav-toggle.is-close span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-toggle.is-close span:nth-child(2){opacity:0}
+.nav-toggle.is-close span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.side-nav{
+  position:fixed;top:0;left:0;bottom:0;z-index:1000;width:min(300px,85vw);
+  background:var(--card);color:var(--text);font-family:var(--ff);
+  box-shadow:4px 0 24px rgba(0,0,0,.18);overflow-y:auto;
+  transform:translateX(-100%);visibility:hidden;transition:transform .25s ease,visibility .25s;
+}
+body.nav-open .side-nav{transform:none;visibility:visible}
+.side-nav-head{
+  display:flex;align-items:center;gap:12px;background:var(--primary);color:#fff;
+  padding:calc(16px + env(safe-area-inset-top,0px)) 20px 14px;
+}
+.side-nav-head h2{font-size:1.1rem;font-weight:700;margin:0;line-height:1.6}
+.side-nav ul{list-style:none;margin:0;padding:14px 12px;display:flex;flex-direction:column;gap:8px}
+.side-nav a{
+  display:block;text-decoration:none;color:var(--text);font-weight:700;font-size:.95rem;line-height:1.3;
+  padding:12px 14px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--card);
+  transition:border-color .15s;
+}
+.side-nav a small{display:block;font-weight:500;font-size:.8rem;color:var(--text-sec);margin-top:3px}
+.side-nav a:hover{border-color:var(--primary)}
+.side-nav a[aria-current="page"]{background:var(--primary-light);border-color:var(--primary);color:var(--primary)}
+.side-nav a:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.nav-backdrop{
+  position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.4);
+  opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;
+}
+body.nav-open .nav-backdrop{opacity:1;visibility:visible}
+@media(max-width:520px){.side-nav-head{padding-left:12px;padding-right:12px}}
+@media(prefers-reduced-motion:reduce){.side-nav,.nav-backdrop,.nav-toggle span{transition:none}}
+@media print{.nav-toggle,.side-nav,.nav-backdrop{display:none!important}}
 </style>
 
+<nav class="side-nav" id="sideNav" aria-label="Men&uacute; del chuletario">
+  <div class="side-nav-head">
+    <button class="nav-toggle is-close" type="button" onclick="setNav(false)" aria-label="Cerrar men&uacute;"><span></span><span></span><span></span></button>
+    <h2>Mi chuletario</h2>
+  </div>
+  <ul>
+    <li><a href="https://michuletario.com/" class="nav-ext">Riesgo cardiovascular<small>Calculadora SCORE2 / SCORE2-OP / SCORE2-Diabetes</small></a></li>
+    <li><a href="#" aria-current="page" onclick="setNav(false);showView('home');return false;">Vacunas CM 2026<small>Calendario y consulta de vacunaci&oacute;n de la Comunidad de Madrid</small></a></li>
+  </ul>
+</nav>
+<div class="nav-backdrop" onclick="setNav(false)"></div>
+
 <header class="app-header">
+  <button class="nav-toggle" id="navToggle" type="button" onclick="setNav(true)" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="sideNav"><span></span><span></span><span></span></button>
   <button class="back-btn" id="backBtn" onclick="goBack()">&#8592; Volver</button>
   <h1>Consulta de Vacunaci&oacute;n</h1>
   <button class="back-btn" id="homeBtn" onclick="showView('home')">&#8962; Men&uacute;<span class="hb-txt">&nbsp;principal</span></button>
@@ -540,7 +596,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);padding-inline
         <li><strong>Mpox</strong>: web <a href="https://www.comunidad.madrid/salud/mpox" target="_blank">comunidad.madrid/salud/mpox</a>. <span>Consultada el 09/10/2026.</span></li>
       </ul>
       </details>
-      <p class="home-updated">&Uacute;ltima actualizaci&oacute;n de la herramienta: <strong>27/10/2026</strong></p>
+      <p class="home-updated">&Uacute;ltima actualizaci&oacute;n de la herramienta: <strong>01/11/2026</strong></p>
     </div>
   </section>
 
@@ -2247,6 +2303,22 @@ document.getElementById('ageYears').addEventListener('keydown', function(e) {
 document.getElementById('ageMonths').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') calcAge();
 });
+
+// Menú lateral del chuletario
+function setNav(open) {
+  document.body.classList.toggle('nav-open', open);
+  const t = document.getElementById('navToggle');
+  t.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const target = open ? document.querySelector('.side-nav a') : t;
+  setTimeout(() => target && target.focus(), 50);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.body.classList.contains('nav-open')) setNav(false);
+});
+// Dentro del Artifact de Claude (marco) el enlace externo se abre en otra pestaña
+if (window.self !== window.top) {
+  document.querySelectorAll('.nav-ext').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
+}
 </script>
 </body>
 </html>
