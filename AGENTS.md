@@ -2,6 +2,10 @@
 
 Léelo entero antes de tocar nada. Si algo de aquí no cuadra con lo que ves, pregunta a la usuaria antes de actuar.
 
+> **Dos reglas básicas:**
+> 1. **La usuaria (Almudena) no es técnica.** No sabe programar ni usar git, la terminal o Cloudflare. Háblale siempre en español sencillo, sin jerga, y explica los cambios por lo que se ve en la web, no por el código. No le pidas que ejecute comandos ni que edite archivos: hazlo tú.
+> 2. **Todo cambio se despliega en GitHub.** Ningún cambio se queda solo en el ordenador: cuando termines y lo hayas probado, haz commit y push a `main` (eso publica la web) y comprueba que se ve en michuletario.com. Si hay un Artifact asociado, actualízalo también.
+
 ## Qué es este proyecto
 
 Este repositorio es el código de la web **https://michuletario.com**, un "chuletario" de herramientas de consulta clínica para atención primaria. Son páginas HTML estáticas, sin paso de compilación ni dependencias:
@@ -16,7 +20,7 @@ Las dos páginas tienen un **menú lateral** (botón ☰ arriba a la izquierda, 
 ## Personas y cuentas
 
 - **Dueño del repositorio:** `gonzalom90-collab`. También es el dueño de la cuenta de Cloudflare donde está publicada la web.
-- **Almudena** (cuenta GitHub `IceBubbleChezz`): colaboradora con permiso de escritura. Gestora de centro de salud, **sin conocimientos informáticos**: háblale en lenguaje sencillo, sin jerga, y explica qué ha cambiado en términos de la herramienta, no del código.
+- **Almudena** (cuenta GitHub `IceBubbleChezz`): colaboradora con permiso de escritura y quien pide los cambios. Gestora de centro de salud, **usuaria no técnica, sin conocimientos informáticos**: háblale en lenguaje sencillo, sin jerga, y explica qué ha cambiado en términos de la herramienta, no del código.
 - En su PC: `git` y GitHub CLI (`C:\Program Files\GitHub CLI\gh.exe`) instalados; git usa la sesión de `gh` (`gh auth setup-git`). Identidad de commits configurada solo en este repo: `Almudena (IceBubbleChezz) <344986998+IceBubbleChezz@users.noreply.github.com>`.
 - **Copia de trabajo del repo: `C:\Users\almud\Documents\1 Trabajo\Proyecto Web\michuletario`.** Trabaja siempre aquí.
 - `C:\Users\almud\claude-code\michuletario` es una copia antigua del mismo repo: no la uses para editar. `C:\Users\almud\claude-code\_antiguo_vacunas` es una versión vieja de la herramienta de vacunas (octubre 2026): solo histórico.
@@ -52,7 +56,7 @@ Las dos páginas tienen un **menú lateral** (botón ☰ arriba a la izquierda, 
 3. Si ves una discrepancia entre fuentes o con lo que ella dice, **señálala y pregunta**; no corrijas por tu cuenta.
 4. Al cambiar contenido, actualiza la fecha **"Última actualización de la herramienta"** de la pantalla de inicio, y la lista de documentos fuente si añades uno.
 5. La pantalla de inicio lleva un **aviso** legal redactado por ella: no lo cambies sin que lo pida.
-6. **No publiques sin su visto bueno.** Un push a `main` cambia la web pública al momento: enséñale el cambio y pregunta antes.
+6. **Todo cambio termina subido a GitHub** (y, por tanto, publicado en la web). Que ella pida un cambio ya incluye publicarlo: no lo dejes solo en local ni le preguntes si lo subes. Pruébalo bien antes, porque el push cambia la web pública al momento. Si algo es dudoso (contenido, discrepancias, cambios en la calculadora de gonzalom90-collab), pregunta **antes de hacer el cambio**, no antes de subirlo.
 
 Documentos fuente, en `C:\Users\almud\Documents\1 Trabajo\Teoría y artículos\Vacunas\`:
 
@@ -68,7 +72,7 @@ Documentos fuente, en `C:\Users\almud\Documents\1 Trabajo\Teoría y artículos\V
 2. **Comprueba el Artifact.** Lee el Artifact (`Artifact` → `read`, URL abajo). Si tiene una versión más nueva que `vacunas/src/herramienta.html` (por ejemplo, la cambió otra sesión o un comentario), fusiona primero esos cambios en la fuente.
 3. Edita **solo** `vacunas/src/herramienta.html`.
 4. Prueba en un navegador sobre una copia temporal (ver "Cómo se despliega la web"). Revisa sobre todo las vistas que has tocado, también en tamaño móvil.
-5. Con el visto bueno de Almudena, publica el Artifact con `Artifact` → `publish`:
+5. Publica el Artifact con `Artifact` → `publish`:
    - `file_path`: `C:\Users\almud\Documents\1 Trabajo\Proyecto Web\michuletario\vacunas\src\herramienta.html`
    - `url`: `https://claude.ai/artifact/YWdbu2WqM6hCGapt79ZhxK`. **Pásala siempre**; sin ella se crea un artifact nuevo.
    - Si lo rechaza porque hay una versión más nueva, fusiona esa versión en la fuente y vuelve a publicar. Nunca sobrescribas.
